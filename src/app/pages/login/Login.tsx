@@ -14,6 +14,7 @@ import { GoogleLogin, useGoogleLogin, GoogleLoginResponse, GoogleLoginResponseOf
 import { APP_TITLE, LOGIN_SUBTITLE, LOGIN_TITLE, MY_NAME, PORTFOLIO_URL, REPOSITORY_URL } from '../../../constantes/textConstantes';
 import { Alert, AlertTitle } from '@mui/material';
 import { CLIENT_ID_GOOGLE } from '../../../constantes/config';
+import { alpha, styled } from '@mui/material/styles';
 
 function Copyright() {
     return (
@@ -27,6 +28,15 @@ function Copyright() {
         </Typography>
     );
 }
+
+const GoogleButton = styled(Button)(({ theme }) => ({
+    textTransform: "none",
+    backgroundColor: theme.palette.common.white,
+    color: theme.palette.grey[600],
+    ["&:hover"]: {
+        backgroundColor: theme.palette.grey[300],
+    }
+}));
 
 export default function Home() {
 
@@ -43,7 +53,7 @@ export default function Home() {
         setErrorMessage(error.message)
     }
 
-    const { signIn } = useGoogleLogin({
+    const { signIn, loaded } = useGoogleLogin({
         onSuccess: onLoginSuccess,
         // onAutoLoadFinished,
         clientId: CLIENT_ID_GOOGLE,
@@ -103,17 +113,12 @@ export default function Home() {
                         spacing={2}
                         justifyContent="center"
                     >
-                        <Button
-                            // disabled={loaded}
-                            variant="contained" onClick={signIn}>Google Login</Button>
-                        <GoogleLogin
-                            clientId={CLIENT_ID_GOOGLE}
-                            onSuccess={onLoginSuccess}
-                            onFailure={onLoginFailure}
-                            cookiePolicy={'single_host_origin'}
-                            isSignedIn
-                            fetchBasicProfile
-                        />
+                        <GoogleButton
+                            disabled={!loaded}
+                            variant="contained" onClick={signIn}>
+                            <img src={process.env.PUBLIC_URL + "/assets/google_logo.svg"} style={{ marginRight: 10 }} />
+                            Sign in with Google
+                        </GoogleButton>
                         <Button variant="outlined" onClick={() => window.open(REPOSITORY_URL)}><CodeIcon sx={{ mr: 1 }} /> Repository</Button>
                     </Stack>
                 </Container>
