@@ -1,5 +1,7 @@
 https://grachet.github.io/react-redux-hook-ts-jest/
 
+https://www.privacypolicies.com/live/72f23374-430c-4435-af15-be751f1c63e1
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
 
 ## Available Scripts
