@@ -34,54 +34,51 @@ export default function Home() {
     }
 
     return (
-        < >
+        <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            minHeight: "100vh"
+        }}>
             <AppBar position="relative">
                 <Toolbar>
-                    <SlowMotionVideoIcon sx={{ mr: 1 }} />
+                    <SlowMotionVideoIcon color="primary" sx={{ mr: 1 }} />
                     <Typography variant="h6" color="inherit" noWrap>
                         {APP_TITLE}
                     </Typography>
                 </Toolbar>
             </AppBar>
-            <main>
-                <Box
-                    sx={{
-                        bgcolor: 'background.paper',
-                        pt: 8,
-                        pb: 6,
-                    }}
-                >
-                    <Container maxWidth="sm">
-                        <Typography
-                            component="h1"
-                            variant="h2"
-                            align="center"
-                            color="text.primary"
-                            gutterBottom
-                        >
-                            {APP_TITLE}
-                        </Typography>
-                        <Typography variant="h5" align="center" color="text.secondary" paragraph>
-                            {LOGIN_TITLE}
-                        </Typography>
-                        <Typography variant="body2" align="center" color="text.secondary" paragraph>
-                            {LOGIN_SUBTITLE}
-                        </Typography>
-                        <Stack
-                            sx={{ pt: 4 }}
-                            direction="row"
-                            spacing={2}
-                            justifyContent="center"
-                        >
-                            <Button variant="contained" onClick={login}>Google Login</Button>
-                            <Button variant="outlined" onClick={() => window.open(REPOSITORY_URL)}><CodeIcon sx={{ mr: 1 }} /> Repository</Button>
-                        </Stack>
-                    </Container>
-                </Box>
-            </main>
-            <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
+            <Container component="main" maxWidth="xl" sx={{ flexGrow: 1 }}>
+                <Container maxWidth="sm" sx={{ mt: 8 }}>
+                    <Typography
+                        component="h1"
+                        variant="h2"
+                        align="center"
+                        color="text.primary"
+                        gutterBottom
+                    >
+                        {APP_TITLE}
+                    </Typography>
+                    <Typography variant="h5" align="center" color="text.secondary" paragraph>
+                        {LOGIN_TITLE}
+                    </Typography>
+                    <Typography variant="body2" align="center" color="text.secondary" paragraph>
+                        {LOGIN_SUBTITLE}
+                    </Typography>
+                    <Stack
+                        sx={{ pt: 4 }}
+                        direction="row"
+                        spacing={2}
+                        justifyContent="center"
+                    >
+                        <Button variant="contained" onClick={login}>Google Login</Button>
+                        <Button variant="outlined" onClick={() => window.open(REPOSITORY_URL)}><CodeIcon sx={{ mr: 1 }} /> Repository</Button>
+                    </Stack>
+                </Container>
+            </Container >
+            <Box sx={{ p: 6 }} component="footer">
                 <Copyright />
             </Box>
-        </>
+        </Box >
     );
 }
