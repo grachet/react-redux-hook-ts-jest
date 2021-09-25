@@ -8,9 +8,11 @@ import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import * as React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router';
+import { useGoogleLogin, GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
 import { APP_TITLE, LOGIN_SUBTITLE, LOGIN_TITLE, MY_NAME, PORTFOLIO_URL, REPOSITORY_URL } from '../../../constantes/textConstantes';
+import { Alert, AlertTitle } from '@mui/material';
 
 function Copyright() {
     return (
@@ -28,10 +30,42 @@ function Copyright() {
 export default function Home() {
 
     const history = useHistory();
+    const [errorMessage, setErrorMessage] = useState<string>("");
 
     const login = () => {
         history.push("/home");
     }
+
+    const onLoginSuccess = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
+        console.log(response);
+    }
+
+    const onLoginFailure = (error: any) => {
+        console.error(error);
+        setErrorMessage(error.message)
+    }
+
+    const { signIn, loaded } = useGoogleLogin({
+        onSuccess: onLoginSuccess,
+        // onAutoLoadFinished,
+        clientId: "",
+        cookiePolicy: 'single_host_origin',
+        // loginHint,
+        // hostedDomain,
+        // autoLoad,
+        isSignedIn: true,
+        fetchBasicProfile: true,
+        // redirectUri,
+        // discoveryDocs,
+        onFailure: onLoginFailure,
+        // uxMode,
+        // scope,
+        // accessType,
+        // responseType,
+        // jsSrc,
+        // onRequest,
+        // prompt
+    })
 
     return (
         <Box sx={{
@@ -71,7 +105,7 @@ export default function Home() {
                         spacing={2}
                         justifyContent="center"
                     >
-                        <Button variant="contained" onClick={login}>Google Login</Button>
+                        <Button disabled={loaded} variant="contained" onClick={signIn}>Google Login</Button>
                         <Button variant="outlined" onClick={() => window.open(REPOSITORY_URL)}><CodeIcon sx={{ mr: 1 }} /> Repository</Button>
                     </Stack>
                 </Container>
@@ -79,6 +113,10 @@ export default function Home() {
             <Box sx={{ p: 6 }} component="footer">
                 <Copyright />
             </Box>
+            {!!errorMessage && <Alert severity="error">
+                <AlertTitle>Error</AlertTitle>
+                {errorMessage}
+            </Alert>}
         </Box >
     );
 }
