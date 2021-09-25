@@ -9,6 +9,7 @@ import Stack from '@mui/material/Stack';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
+import { useHistory } from 'react-router';
 import { APP_TITLE, LOGIN_SUBTITLE, LOGIN_TITLE, MY_NAME, PORTFOLIO_URL, REPOSITORY_URL } from '../../../constantes/textConstantes';
 
 function Copyright() {
@@ -25,6 +26,13 @@ function Copyright() {
 }
 
 export default function Home() {
+
+    const history = useHistory();
+
+    const login = () => {
+        history.push("/home");
+    }
+
     return (
         < >
             <AppBar position="relative">
@@ -65,7 +73,7 @@ export default function Home() {
                             spacing={2}
                             justifyContent="center"
                         >
-                            <Button variant="contained">Google Login</Button>
+                            <Button variant="contained" onClick={login}>Google Login</Button>
                             <Button variant="outlined" onClick={() => window.open(REPOSITORY_URL)}><CodeIcon sx={{ mr: 1 }} /> Repository</Button>
                         </Stack>
                     </Container>
