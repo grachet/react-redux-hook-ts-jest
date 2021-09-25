@@ -10,9 +10,10 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
-import { useGoogleLogin, GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
+import { GoogleLogin, useGoogleLogin, GoogleLoginResponse, GoogleLoginResponseOffline } from 'react-google-login';
 import { APP_TITLE, LOGIN_SUBTITLE, LOGIN_TITLE, MY_NAME, PORTFOLIO_URL, REPOSITORY_URL } from '../../../constantes/textConstantes';
 import { Alert, AlertTitle } from '@mui/material';
+import { CLIENT_ID_GOOGLE } from '../../../constantes/config';
 
 function Copyright() {
     return (
@@ -32,12 +33,9 @@ export default function Home() {
     const history = useHistory();
     const [errorMessage, setErrorMessage] = useState<string>("");
 
-    const login = () => {
-        history.push("/home");
-    }
-
     const onLoginSuccess = (response: GoogleLoginResponse | GoogleLoginResponseOffline) => {
         console.log(response);
+        history.push("/home");
     }
 
     const onLoginFailure = (error: any) => {
@@ -45,10 +43,10 @@ export default function Home() {
         setErrorMessage(error.message)
     }
 
-    const { signIn, loaded } = useGoogleLogin({
+    const { signIn } = useGoogleLogin({
         onSuccess: onLoginSuccess,
         // onAutoLoadFinished,
-        clientId: "",
+        clientId: CLIENT_ID_GOOGLE,
         cookiePolicy: 'single_host_origin',
         // loginHint,
         // hostedDomain,
@@ -105,7 +103,17 @@ export default function Home() {
                         spacing={2}
                         justifyContent="center"
                     >
-                        <Button disabled={loaded} variant="contained" onClick={signIn}>Google Login</Button>
+                        <Button
+                            // disabled={loaded}
+                            variant="contained" onClick={signIn}>Google Login</Button>
+                        <GoogleLogin
+                            clientId={CLIENT_ID_GOOGLE}
+                            onSuccess={onLoginSuccess}
+                            onFailure={onLoginFailure}
+                            cookiePolicy={'single_host_origin'}
+                            isSignedIn
+                            fetchBasicProfile
+                        />
                         <Button variant="outlined" onClick={() => window.open(REPOSITORY_URL)}><CodeIcon sx={{ mr: 1 }} /> Repository</Button>
                     </Stack>
                 </Container>
