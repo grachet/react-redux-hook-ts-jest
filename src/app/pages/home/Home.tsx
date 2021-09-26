@@ -4,9 +4,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import SlowMotionVideoIcon from '@mui/icons-material/SlowMotionVideo';
 import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
-import { Alert, AlertTitle, IconButton } from '@mui/material';
+import { IconButton } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
-import Avatar from '@mui/material/Avatar';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -23,9 +22,8 @@ import { alpha, styled } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
-import { GoogleLoginResponse, GoogleLoginResponseOffline, useGoogleLogout } from 'react-google-login';
 import { useHistory, useLocation } from 'react-router';
-import { CLIENT_ID_GOOGLE } from '../../../constantes/config';
+import LogoutUserAvatar from '../../../features/auth/LogoutUserAvatar';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -84,24 +82,14 @@ const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 export default function Home() {
 
     const [openDrawer, setOpenDrawer] = useState<boolean>(false)
-    const [errorMessage, setErrorMessage] = useState<string>("");
     const location = useLocation();
     const history = useHistory();
     const videoType = location.pathname.substring(1);
-
-    const onLogoutSuccess = () => {
-        history.push("/login");
-    }
 
     const changeVideoType = (videoType: string) => {
         setOpenDrawer(false)
         history.push(videoType)
     }
-
-    const { signOut } = useGoogleLogout({
-        onLogoutSuccess: onLogoutSuccess,
-        clientId: CLIENT_ID_GOOGLE,
-    })
 
     return (
         < >
@@ -126,9 +114,7 @@ export default function Home() {
                             inputProps={{ 'aria-label': 'search' }}
                         />
                     </Search>
-                    <IconButton size="large" color="inherit" onClick={signOut}>
-                        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-                    </IconButton>
+                    <LogoutUserAvatar />
                 </Toolbar>
             </AppBar>
             <main>
@@ -190,10 +176,6 @@ export default function Home() {
                     </ListItem>
                 </List>
             </StyledDrawer >
-            {!!errorMessage && <Alert severity="error">
-                <AlertTitle>Error</AlertTitle>
-                {errorMessage}
-            </Alert>}
         </>
     );
 }
