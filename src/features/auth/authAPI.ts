@@ -11,7 +11,7 @@ export const gapiLogin = async (onlyAlreadySigned: boolean = false): Promise<any
         });
         await window.gapi.auth2.init({
             client_id: CLIENT_ID_GOOGLE,
-            // scope: "youtube",
+            scope: "https://www.googleapis.com/auth/youtube.readonly",
         });
         const authInstance = gapi.auth2.getAuthInstance();
         const isSignedIn = authInstance.isSignedIn.get();
