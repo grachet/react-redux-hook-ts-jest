@@ -13,7 +13,7 @@ import { Dispatch } from 'redux';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { locationToMovieType } from '../../functions/helperFunctions';
 import { IMAGE_URL_TMDB } from './movieAPI';
-import { MovieKeyType, MovieType, nowplaying, search, selectMovie, toprated, upcoming } from './movieSlice';
+import { MovieKeyType, MovieType, nowplaying, search, selectMovie, toprated, upcoming, getGenre } from './movieSlice';
 
 const dispatchGetMovie = (dispatch: Dispatch<any>, movieType: string) => {
     if (movieType === "toprated") {
@@ -30,7 +30,7 @@ function MovieList() {
     const { searchText }: { searchText?: string } = useParams();
     const location = useLocation();
     const movieType: MovieKeyType = locationToMovieType(location);
-    const { [movieType]: movies, status } = useAppSelector(selectMovie);
+    const { [movieType]: movies, status, genre } = useAppSelector(selectMovie);
 
     const dispatch = useAppDispatch();
 
@@ -46,7 +46,11 @@ function MovieList() {
         }
     }, [dispatch, searchText])
 
-    console.log(movies)
+    useEffect(() => {
+        if (!Object.keys(genre).length) {
+            dispatch(getGenre())
+        }
+    }, [dispatch, genre])
 
     return (
         <Container sx={{ mt: 8, py: 4 }} maxWidth="xl">
@@ -56,7 +60,7 @@ function MovieList() {
                         Nothing found <SentimentVeryDissatisfiedIcon sx={{ verticalAlign: "middle" }} />
                     </Typography>
                 </Grid>}
-                {movies.map(({ id, original_title, overview, backdrop_path }: MovieType) => (
+                {movies.map(({ id, title, overview, backdrop_path, vote_average, release_date, genre_ids }: MovieType) => (
                     <Grid item key={id} xs={12} sm={6} md={4} lg={3}>
                         <Card
                             sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
@@ -73,11 +77,15 @@ function MovieList() {
                             />
                             <CardContent sx={{ flexGrow: 1 }}>
                                 <Typography gutterBottom variant="h6" component="h2">
-                                    {original_title}
+                                    {title}
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary">
                                     {overview}
                                 </Typography>
+                                {vote_average}
+                                {release_date}
+
+                                {genre_ids.map((id: number) => genre[id])}
                             </CardContent>
                         </Card>
                     </Grid>

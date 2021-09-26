@@ -4,6 +4,7 @@ import MovieReducer, {
 
 describe('counter reducer', () => {
     const initialState: MovieState = {
+        genre: {},
         search: [],
         nowplaying: [],
         upcoming: [],
@@ -15,6 +16,7 @@ describe('counter reducer', () => {
     };
     it('should handle initial state', () => {
         expect(MovieReducer(undefined, { type: 'unknown' })).toEqual({
+            genre: {},
             search: [],
             nowplaying: [],
             upcoming: [],
