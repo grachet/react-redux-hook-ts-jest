@@ -1,6 +1,6 @@
 import RefreshIcon from '@mui/icons-material/Refresh';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
-import { Button } from '@mui/material';
+import { Box, Button, CardHeader, Chip, Rating, Stack, Theme } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -13,7 +13,9 @@ import { Dispatch } from 'redux';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { locationToMovieType } from '../../functions/helperFunctions';
 import { IMAGE_URL_TMDB } from './movieAPI';
+import TextTruncate from 'react-text-truncate';
 import { MovieKeyType, MovieType, nowplaying, search, selectMovie, toprated, upcoming, getGenre } from './movieSlice';
+import { URL_PLACEHOLDER } from '../../constantes/textConstantes';
 
 const dispatchGetMovie = (dispatch: Dispatch<any>, movieType: string) => {
     if (movieType === "toprated") {
@@ -65,32 +67,43 @@ function MovieList() {
                         <Card
                             sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                         >
+                            <CardHeader
+                                titleTypographyProps={{ variant: "subtitle2" }}
+                                subheaderTypographyProps={{ variant: "button" }}
+                                title={title}
+                                subheader={<>
+                                    {release_date}
+                                    <Rating sx={{ float: "right" }} size="small" name="read-only" value={vote_average / 2} readOnly />
+                                </>
+                                }
+                            />
                             <CardMedia
                                 component="img"
-                                sx={{
-                                    // 16:9
-                                    // pt: '56.25%', 
-                                }}
-                                image={IMAGE_URL_TMDB + backdrop_path}
-
+                                sx={{ backgroundColor: (theme: Theme) => theme.palette.common.black }}
+                                image={backdrop_path ? IMAGE_URL_TMDB + backdrop_path : URL_PLACEHOLDER}
                                 alt="random"
                             />
-                            <CardContent sx={{ flexGrow: 1 }}>
-                                <Typography gutterBottom variant="h6" component="h2">
-                                    {title}
+                            <Box sx={{ flexGrow: 1, px: 1.5, pt: 1.5 }}>
+                                <Typography
+                                    sx={{ fontSize: 12, color: (theme: Theme) => theme.palette.text.secondary }}
+                                >
+                                    <TextTruncate
+                                        line={3}
+                                        element="span"
+                                        truncateText="…"
+                                        text={overview}
+                                    />
                                 </Typography>
-                                <Typography variant="body2" color="textSecondary">
-                                    {overview}
+                            </Box>
+                            <Box sx={{ px: 1.5, pb: 0.5 }}>
+                                <Typography key={id} variant="button" color="primary" sx={{ fontSize: 12 }} >
+                                    {genre_ids.slice(0, 3).map((id: number) => genre[id]).join(" / ")}
                                 </Typography>
-                                {vote_average}
-                                {release_date}
-
-                                {genre_ids.map((id: number) => genre[id])}
-                            </CardContent>
+                            </Box>
                         </Card>
                     </Grid>
                 ))}
-                {!searchText && <Grid item xs={12} >
+                {!searchText && status !== "loading" && <Grid item xs={12} >
 
                     <Button variant="outlined"
                         onClick={() => dispatchGetMovie(dispatch, movieType)}

@@ -6,6 +6,8 @@ export const LOGIN_SUBTITLE = "No comparison allowed*";
 export const REPOSITORY_URL = "https://github.com/grachet/react-redux-hook-ts-jest";
 export const PORTFOLIO_URL = "https://grachet.github.io/";
 
+export const URL_PLACEHOLDER = process.env.PUBLIC_URL + "/assets/placeholder_background.png";
+
 export const PAGE_TITLES: { [key: string]: string } = {
     "search": "Search",
     "toprated": "Top rated",
