@@ -1,15 +1,13 @@
-import CodeIcon from '@mui/icons-material/Code';
 import SlowMotionVideoIcon from '@mui/icons-material/SlowMotionVideo';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import React from 'react';
-import { APP_TITLE, LOGIN_SUBTITLE, LOGIN_TITLE, MY_NAME, PORTFOLIO_URL, REPOSITORY_URL } from '../../../constantes/textConstantes';
+import { APP_TITLE, LOGIN_SUBTITLE, LOGIN_TITLE, MY_NAME, PORTFOLIO_URL } from '../../../constantes/textConstantes';
 import LoginButton from '../../../features/auth/LoginButton';
 
 function Copyright() {

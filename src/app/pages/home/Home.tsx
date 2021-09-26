@@ -1,10 +1,10 @@
+import EventNoteIcon from '@mui/icons-material/EventNote';
 import ExploreIcon from '@mui/icons-material/Explore';
-import HomeIcon from '@mui/icons-material/Home';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import SlowMotionVideoIcon from '@mui/icons-material/SlowMotionVideo';
-import SubscriptionsIcon from '@mui/icons-material/Subscriptions';
-import { IconButton } from '@mui/material';
+import TimerIcon from '@mui/icons-material/Timer';
+import { IconButton, LinearProgress } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
@@ -18,13 +18,12 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
+import { APP_TITLE } from '../../../constantes/textConstantes';
 import LogoutUserAvatar from '../../../features/auth/LogoutUserAvatar';
 import MovieList from '../../../features/movie/MovieList';
-import { MovieKeyType } from '../../../features/movie/movieSlice';
+import { MovieKeyType, selectMovie } from '../../../features/movie/movieSlice';
 import { locationToMovieType } from './../../../functions/helperFunctions';
-import EventNoteIcon from '@mui/icons-material/EventNote';
-import TimerIcon from '@mui/icons-material/Timer';
-import { APP_TITLE } from '../../../constantes/textConstantes';
+import { useAppSelector } from '../../hooks';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -89,6 +88,7 @@ export default function Home() {
     const [openDrawer, setOpenDrawer] = useState<boolean>(false)
     const location = useLocation();
     const history = useHistory();
+    const { status } = useAppSelector(selectMovie);
     const PageType: MovieKeyType = locationToMovieType(location);
 
     const changeMovieType = (MovieType: string) => {
@@ -98,7 +98,7 @@ export default function Home() {
 
     return (
         < >
-            <AppBar position="relative">
+            <AppBar position="fixed">
                 <Toolbar>
                     <IconButton size="large" color="inherit" sx={{ mr: 4 }} onClick={() => setOpenDrawer(true)}>
                         <MenuIcon />
@@ -121,8 +121,9 @@ export default function Home() {
                     </Search>
                     <LogoutUserAvatar />
                 </Toolbar>
+                {status === 'loading' && <LinearProgress />}
             </AppBar>
-            <main>
+            <main  >
                 <MovieList />
             </main>
             <StyledDrawer
