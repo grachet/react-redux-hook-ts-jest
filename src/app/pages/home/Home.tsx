@@ -19,9 +19,9 @@ import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
 import LogoutUserAvatar from '../../../features/auth/LogoutUserAvatar';
-import VideoList from '../../../features/video/VideoList';
-import { VideoKeyType } from '../../../features/video/videoSlice';
-import { locationToVideoType } from './../../../functions/helperFunctions';
+import MovieList from '../../../features/movie/MovieList';
+import { MovieKeyType } from '../../../features/movie/movieSlice';
+import { locationToMovieType } from './../../../functions/helperFunctions';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -82,11 +82,11 @@ export default function Home() {
     const [openDrawer, setOpenDrawer] = useState<boolean>(false)
     const location = useLocation();
     const history = useHistory();
-    const videoType: VideoKeyType = locationToVideoType(location);
+    const MovieType: MovieKeyType = locationToMovieType(location);
 
-    const changeVideoType = (videoType: string) => {
+    const changeMovieType = (MovieType: string) => {
         setOpenDrawer(false)
-        history.push(videoType)
+        history.push(MovieType)
     }
 
     return (
@@ -98,9 +98,9 @@ export default function Home() {
                     </IconButton>
                     <SlowMotionVideoIcon color="primary" sx={{ mr: 1 }} />
                     <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
-                        VideoTube
+                        MovieTube
                         <Typography variant="button" color="textSecondary" component="span" sx={{ ml: 2 }}>
-                            {videoType}
+                            {MovieType}
                         </Typography>
                     </Typography>
                     <Search>
@@ -116,7 +116,7 @@ export default function Home() {
                 </Toolbar>
             </AppBar>
             <main>
-                <VideoList />
+                <MovieList />
             </main>
             <StyledDrawer
                 anchor="left"
@@ -124,20 +124,20 @@ export default function Home() {
                 onClose={() => setOpenDrawer(false)}
             >
                 <List>
-                    <ListItem button onClick={() => changeVideoType("home")}>
+                    <ListItem button onClick={() => changeMovieType("home")}>
                         <ListItemIcon>
                             <HomeIcon />
                         </ListItemIcon>
                         <ListItemText primary={"Home"} />
                     </ListItem>
                     <Divider />
-                    <ListItem button onClick={() => changeVideoType("explore")}>
+                    <ListItem button onClick={() => changeMovieType("explore")}>
                         <ListItemIcon>
                             <ExploreIcon />
                         </ListItemIcon>
                         <ListItemText primary={"Explore"} />
                     </ListItem>
-                    <ListItem button onClick={() => changeVideoType("subscription")} >
+                    <ListItem button onClick={() => changeMovieType("subscription")} >
                         <ListItemIcon>
                             <SubscriptionsIcon />
                         </ListItemIcon>

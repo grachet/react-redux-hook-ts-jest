@@ -1,7 +1,7 @@
 import { Location } from 'history';
-import { VideoKeyType } from '../features/video/videoSlice';
+import { MovieKeyType } from '../features/movie/movieSlice';
 
-export const locationToVideoType = (location: Location<unknown>): VideoKeyType => {
+export const locationToMovieType = (location: Location<unknown>): MovieKeyType => {
     const name = location.pathname.substring(1);
     return (name === "home" || name === "explore" || name === "subscription") ? name : "home";
 }

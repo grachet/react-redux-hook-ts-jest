@@ -7,40 +7,40 @@ import Typography from '@mui/material/Typography';
 import { default as React, useEffect } from 'react';
 import { useLocation } from 'react-router';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { locationToVideoType } from '../../functions/helperFunctions';
+import { locationToMovieType } from '../../functions/helperFunctions';
 import {
-    home, subscription, explore, selectVideo, VideoKeyType
-} from './videoSlice';
+    home, subscription, explore, selectMovie, MovieKeyType
+} from './movieSlice';
 
-const fetchByVideoType = {
+const fetchByMovieType = {
     home,
     subscription,
     explore
 }
 
-function VideoList() {
+function MovieList() {
 
     const location = useLocation();
-    const videoType: VideoKeyType = locationToVideoType(location);
-    const { [videoType]: videos } = useAppSelector(selectVideo);
+    const MovieType: MovieKeyType = locationToMovieType(location);
+    const { [MovieType]: Movies } = useAppSelector(selectMovie);
 
     const dispatch = useAppDispatch();
 
-    const fetchVideo = fetchByVideoType[videoType];
+    const fetchMovie = fetchByMovieType[MovieType];
 
     // useEffect(() => {
-    //     dispatch(fetchByVideoType[videoType])
+    //     dispatch(fetchByMovieType[MovieType])
     // }, [dispatch])
 
-    console.log(videos);
+    console.log(Movies);
 
     return (
         <Container sx={{ py: 8 }} maxWidth="xl">
-            <button onClick={() => fetchVideo && dispatch(fetchVideo())}>More</button>
+            <button onClick={() => fetchMovie && dispatch(fetchMovie())}>More</button>
             <br />
-            {JSON.stringify(videos)}
+            {JSON.stringify(Movies)}
             <Grid container spacing={4}>
-                {/* {videos.map((card) => (
+                {/* {Movies.map((card) => (
                     <Grid item key={card} xs={12} sm={6} md={4} lg={3}>
                         <Card
                             sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
@@ -71,4 +71,4 @@ function VideoList() {
     );
 }
 
-export default VideoList;
+export default MovieList;
