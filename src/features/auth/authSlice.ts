@@ -3,7 +3,11 @@ import { RootState } from '../../app/store';
 import { gapiLogin, gapiLogout } from './authAPI';
 
 export interface AuthState {
-    account: any;
+    account: null | {
+        email: string,
+        profilePictureURL: string,
+        fullName: string,
+    };
     status: 'idle' | 'loading' | 'failed';
 }
 
@@ -16,7 +20,12 @@ export const login = createAsyncThunk(
     'auth/login',
     async (onlyAlreadySigned: boolean = false) => {
         const response = await gapiLogin(onlyAlreadySigned);
-        return response;
+        console.log(response)
+        return {
+            email: response.it.Tt,
+            profilePictureURL: response.it.kK,
+            fullName: response.it.Se,
+        };
     }
 );
 

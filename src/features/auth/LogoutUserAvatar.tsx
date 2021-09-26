@@ -2,6 +2,7 @@ import { IconButton } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import Tooltip from '@mui/material/Tooltip';
 import {
     logout,
     selectAuth
@@ -12,12 +13,12 @@ function LogoutUserAvatar() {
     const account = useAppSelector(selectAuth);
     const dispatch = useAppDispatch();
 
-    console.log(account)
-
     return (
-        <IconButton size="large" color="inherit" onClick={() => dispatch(logout())}>
-            <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-        </IconButton>
+        <Tooltip title={"Logout from " + account?.email}>
+            <IconButton size="large" color="inherit" onClick={() => dispatch(logout())}>
+                <Avatar alt={account?.fullName} src={account?.profilePictureURL} />
+            </IconButton>
+        </Tooltip>
     );
 }
 
