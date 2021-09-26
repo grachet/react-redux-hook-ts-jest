@@ -69,7 +69,7 @@ export const toprated = createAsyncThunk(
     'movie/toprated',
     async (_, { getState }) => {
         const { movie } = getState() as { movie: MovieState };
-        const response = await getUpcomingMovies(movie.topratedPage);
+        const response = await getTopRatedMovies(movie.topratedPage);
         return response?.results || [];
     }
 );
@@ -87,7 +87,7 @@ export const upcoming = createAsyncThunk(
     'movie/upcoming',
     async (_, { getState }) => {
         const { movie } = getState() as { movie: MovieState };
-        const response = await getTopRatedMovies(movie.upcomingPage);
+        const response = await getUpcomingMovies(movie.upcomingPage);
         return response?.results || [];
     }
 );

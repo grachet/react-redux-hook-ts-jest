@@ -7,7 +7,7 @@ import Stack from '@mui/material/Stack';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import React from 'react';
-import { APP_TITLE, LOGIN_SUBTITLE, LOGIN_TITLE, MY_NAME, PORTFOLIO_URL } from '../../../constantes/textConstantes';
+import { APP_TITLE, LOGIN_TITLE, MY_NAME, PORTFOLIO_URL } from '../../../constantes/textConstantes';
 import LoginButton from '../../../features/auth/LoginButton';
 
 function Copyright() {
@@ -53,9 +53,6 @@ export default function Home() {
                     </Typography>
                     <Typography variant="h5" align="center" color="text.secondary" paragraph>
                         {LOGIN_TITLE}
-                    </Typography>
-                    <Typography variant="body2" align="center" color="text.secondary" paragraph>
-                        {LOGIN_SUBTITLE}
                     </Typography>
                     <Stack
                         sx={{ pt: 4 }}
