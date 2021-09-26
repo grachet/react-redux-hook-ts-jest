@@ -1,21 +1,20 @@
 import RefreshIcon from '@mui/icons-material/Refresh';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
-import { Box, Button, CardHeader, Chip, Rating, Stack, Theme } from '@mui/material';
+import { Box, Button, CardHeader, Rating, Theme } from '@mui/material';
 import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { default as React, useEffect } from 'react';
 import { useLocation, useParams } from 'react-router';
+import TextTruncate from 'react-text-truncate';
 import { Dispatch } from 'redux';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { URL_PLACEHOLDER } from '../../constantes/textConstantes';
 import { locationToMovieType } from '../../functions/helperFunctions';
 import { IMAGE_URL_TMDB } from './movieAPI';
-import TextTruncate from 'react-text-truncate';
-import { MovieKeyType, MovieType, nowplaying, search, selectMovie, toprated, upcoming, getGenre } from './movieSlice';
-import { URL_PLACEHOLDER } from '../../constantes/textConstantes';
+import { getGenre, MovieKeyType, MovieType, nowplaying, search, selectMovie, toprated, upcoming } from './movieSlice';
 
 const dispatchGetMovie = (dispatch: Dispatch<any>, movieType: string) => {
     if (movieType === "toprated") {
