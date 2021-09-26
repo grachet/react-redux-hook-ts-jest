@@ -28,6 +28,24 @@ export const home = createAsyncThunk(
     }
 );
 
+export const subscription = createAsyncThunk(
+    'video/subscription',
+    async () => {
+        const response = await getSubscriptionVideos();
+        console.log(response)
+        return response.data;
+    }
+);
+
+export const explore = createAsyncThunk(
+    'video/explore',
+    async () => {
+        const response = await getExploreVideos();
+        console.log(response)
+        return response.data;
+    }
+);
+
 export const videoSlice = createSlice({
     name: 'video',
     initialState,
@@ -42,6 +60,20 @@ export const videoSlice = createSlice({
             .addCase(home.fulfilled, (state, action) => {
                 state.status = 'idle';
                 state.home = [...state.home, ...action.payload];
+            })
+            .addCase(subscription.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(subscription.fulfilled, (state, action) => {
+                state.status = 'idle';
+                state.subscription = [...state.subscription, ...action.payload];
+            })
+            .addCase(explore.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(explore.fulfilled, (state, action) => {
+                state.status = 'idle';
+                state.explore = [...state.explore, ...action.payload];
             })
     },
 });

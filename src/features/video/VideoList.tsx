@@ -9,8 +9,14 @@ import { useLocation } from 'react-router';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { locationToVideoType } from '../../functions/helperFunctions';
 import {
-    home, selectVideo, VideoKeyType
+    home, subscription, explore, selectVideo, VideoKeyType
 } from './videoSlice';
+
+const fetchByVideoType = {
+    home,
+    subscription,
+    explore
+}
 
 function VideoList() {
 
@@ -20,16 +26,21 @@ function VideoList() {
 
     const dispatch = useAppDispatch();
 
-    useEffect(() => {
-        dispatch(home())
-    }, [dispatch])
+    const fetchVideo = fetchByVideoType[videoType];
+
+    // useEffect(() => {
+    //     dispatch(fetchByVideoType[videoType])
+    // }, [dispatch])
 
     console.log(videos);
 
     return (
         <Container sx={{ py: 8 }} maxWidth="xl">
+            <button onClick={() => fetchVideo && dispatch(fetchVideo())}>More</button>
+            <br />
+            {JSON.stringify(videos)}
             <Grid container spacing={4}>
-                {videos.map((card) => (
+                {/* {videos.map((card) => (
                     <Grid item key={card} xs={12} sm={6} md={4} lg={3}>
                         <Card
                             sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
@@ -54,7 +65,7 @@ function VideoList() {
                             </CardContent>
                         </Card>
                     </Grid>
-                ))}
+                ))} */}
             </Grid>
         </Container>
     );
