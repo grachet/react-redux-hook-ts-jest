@@ -1,5 +1,5 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState, AppThunk } from '../../app/store';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { RootState } from '../../app/store';
 import { gapiLogin, gapiLogout } from './authAPI';
 
 export interface AuthState {
@@ -14,19 +14,17 @@ const initialState: AuthState = {
 
 export const login = createAsyncThunk(
     'auth/login',
-    async () => {
-        const response = await gapiLogin();
-        // The value we return becomes the `fulfilled` action payload
-        return response.data;
+    async (onlyAlreadySigned: boolean = false) => {
+        const response = await gapiLogin(onlyAlreadySigned);
+        return response;
     }
 );
 
 export const logout = createAsyncThunk(
     'auth/logout',
     async () => {
-        const response = await gapiLogout();
-        // The value we return becomes the `fulfilled` action payload
-        return response.data;
+        await gapiLogout();
+        return null;
     }
 );
 
@@ -44,6 +42,13 @@ export const authSlice = createSlice({
             .addCase(login.fulfilled, (state, action) => {
                 state.status = 'idle';
                 state.account = action.payload;
+            })
+            .addCase(logout.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(logout.fulfilled, (state) => {
+                state.status = 'idle';
+                state.account = null;
             });
     },
 });

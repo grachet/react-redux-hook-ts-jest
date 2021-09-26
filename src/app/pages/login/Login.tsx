@@ -9,7 +9,6 @@ import Stack from '@mui/material/Stack';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import React from 'react';
-import { useHistory } from 'react-router';
 import { APP_TITLE, LOGIN_SUBTITLE, LOGIN_TITLE, MY_NAME, PORTFOLIO_URL, REPOSITORY_URL } from '../../../constantes/textConstantes';
 import LoginButton from '../../../features/auth/LoginButton';
 
@@ -27,8 +26,6 @@ function Copyright() {
 }
 
 export default function Home() {
-
-    const history = useHistory();
 
     return (
         <Box sx={{
