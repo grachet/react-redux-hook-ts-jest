@@ -22,6 +22,9 @@ import LogoutUserAvatar from '../../../features/auth/LogoutUserAvatar';
 import MovieList from '../../../features/movie/MovieList';
 import { MovieKeyType } from '../../../features/movie/movieSlice';
 import { locationToMovieType } from './../../../functions/helperFunctions';
+import EventNoteIcon from '@mui/icons-material/EventNote';
+import TimerIcon from '@mui/icons-material/Timer';
+import { APP_TITLE } from '../../../constantes/textConstantes';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -75,14 +78,18 @@ const StyledDrawer = styled(Drawer)(({ theme }) => ({
     },
 }));
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const PAGE_TITLES: { [key: string]: string } = {
+    "toprated": "Top rated",
+    "nowplaying": "Now Playing",
+    "upcoming": "Up Comming",
+}
 
 export default function Home() {
 
     const [openDrawer, setOpenDrawer] = useState<boolean>(false)
     const location = useLocation();
     const history = useHistory();
-    const MovieType: MovieKeyType = locationToMovieType(location);
+    const PageType: MovieKeyType = locationToMovieType(location);
 
     const changeMovieType = (MovieType: string) => {
         setOpenDrawer(false)
@@ -98,9 +105,9 @@ export default function Home() {
                     </IconButton>
                     <SlowMotionVideoIcon color="primary" sx={{ mr: 1 }} />
                     <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
-                        MovieTube
+                        {APP_TITLE}
                         <Typography variant="button" color="textSecondary" component="span" sx={{ ml: 2 }}>
-                            {MovieType}
+                            {PAGE_TITLES[PageType]}
                         </Typography>
                     </Typography>
                     <Search>
@@ -124,24 +131,24 @@ export default function Home() {
                 onClose={() => setOpenDrawer(false)}
             >
                 <List>
-                    <ListItem button onClick={() => changeMovieType("home")}>
-                        <ListItemIcon>
-                            <HomeIcon />
-                        </ListItemIcon>
-                        <ListItemText primary={"Home"} />
-                    </ListItem>
-                    <Divider />
-                    <ListItem button onClick={() => changeMovieType("explore")}>
+                    <ListItem button onClick={() => changeMovieType("toprated")}>
                         <ListItemIcon>
                             <ExploreIcon />
                         </ListItemIcon>
-                        <ListItemText primary={"Explore"} />
+                        <ListItemText primary={"Top rated"} />
                     </ListItem>
-                    <ListItem button onClick={() => changeMovieType("subscription")} >
+                    <Divider />
+                    <ListItem button onClick={() => changeMovieType("nowplaying")}>
                         <ListItemIcon>
-                            <SubscriptionsIcon />
+                            <TimerIcon />
                         </ListItemIcon>
-                        <ListItemText primary={"Subscription"} />
+                        <ListItemText primary={"Now Playing"} />
+                    </ListItem>
+                    <ListItem button onClick={() => changeMovieType("upcoming")} >
+                        <ListItemIcon>
+                            < EventNoteIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={"Up Comming"} />
                     </ListItem>
                 </List>
             </StyledDrawer >

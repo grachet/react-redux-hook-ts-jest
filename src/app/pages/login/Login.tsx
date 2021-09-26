@@ -66,7 +66,6 @@ export default function Home() {
                         justifyContent="center"
                     >
                         <LoginButton />
-                        <Button variant="outlined" onClick={() => window.open(REPOSITORY_URL)}><CodeIcon sx={{ mr: 1 }} /> Repository</Button>
                     </Stack>
                 </Container>
             </Container >

@@ -4,17 +4,25 @@ import MovieReducer, {
 
 describe('counter reducer', () => {
     const initialState: MovieState = {
-        home: [],
-        subscription: [],
-        explore: [],
+        search: [],
+        nowplaying: [],
+        upcoming: [],
+        toprated: [],
         status: 'idle',
+        nowplayingPage: 0,
+        upcomingPage: 0,
+        topratedPage: 0,
     };
     it('should handle initial state', () => {
         expect(MovieReducer(undefined, { type: 'unknown' })).toEqual({
-            home: [],
-            subscription: [],
-            explore: [],
+            search: [],
+            nowplaying: [],
+            upcoming: [],
+            toprated: [],
             status: 'idle',
+            nowplayingPage: 0,
+            upcomingPage: 0,
+            topratedPage: 0,
         });
     });
 });

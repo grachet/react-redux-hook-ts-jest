@@ -32,23 +32,27 @@ function App() {
       <Router>
         <Switch>
           <Route path="/login">
-            {!!account && <Redirect to='/home' />}
+            {!!account && <Redirect to='/toprated' />}
             <Login />
           </Route>
-          <Route path="/home">
+          <Route path="/search/:searchText">
             {!account && <Redirect to='/login' />}
             <Home />
           </Route>
-          <Route path="/explore">
+          <Route path="/toprated">
             {!account && <Redirect to='/login' />}
             <Home />
           </Route>
-          <Route path="/subscription">
+          <Route path="/nowplaying">
+            {!account && <Redirect to='/login' />}
+            <Home />
+          </Route>
+          <Route path="/upcoming">
             {!account && <Redirect to='/login' />}
             <Home />
           </Route>
           <Route path="/">
-            <Redirect to='/home' />
+            <Redirect to='/toprated' />
           </Route>
         </Switch>
       </Router>
