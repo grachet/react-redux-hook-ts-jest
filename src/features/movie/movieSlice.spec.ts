@@ -9,9 +9,9 @@ describe('counter reducer', () => {
         upcoming: [],
         toprated: [],
         status: 'idle',
-        nowplayingPage: 0,
-        upcomingPage: 0,
-        topratedPage: 0,
+        nowplayingPage: 1,
+        upcomingPage: 1,
+        topratedPage: 1,
     };
     it('should handle initial state', () => {
         expect(MovieReducer(undefined, { type: 'unknown' })).toEqual({
@@ -20,9 +20,9 @@ describe('counter reducer', () => {
             upcoming: [],
             toprated: [],
             status: 'idle',
-            nowplayingPage: 0,
-            upcomingPage: 0,
-            topratedPage: 0,
+            nowplayingPage: 1,
+            upcomingPage: 1,
+            topratedPage: 1,
         });
     });
 });

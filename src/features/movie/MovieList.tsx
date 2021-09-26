@@ -1,4 +1,5 @@
 import RefreshIcon from '@mui/icons-material/Refresh';
+import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import { Button } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -7,41 +8,54 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { default as React, useEffect } from 'react';
-import { useLocation } from 'react-router';
+import { useLocation, useParams } from 'react-router';
+import { Dispatch } from 'redux';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { locationToMovieType } from '../../functions/helperFunctions';
 import { IMAGE_URL_TMDB } from './movieAPI';
 import { MovieKeyType, MovieType, nowplaying, search, selectMovie, toprated, upcoming } from './movieSlice';
 
-const fetchByMovieType = {
-    search,
-    upcoming,
-    nowplaying,
-    toprated,
+const dispatchGetMovie = (dispatch: Dispatch<any>, movieType: string) => {
+    if (movieType === "toprated") {
+        dispatch(toprated())
+    } else if (movieType === "nowplaying") {
+        dispatch(nowplaying())
+    } else if (movieType === "upcoming") {
+        dispatch(upcoming())
+    }
 }
 
 function MovieList() {
 
+    const { searchText }: { searchText?: string } = useParams();
     const location = useLocation();
-    const MovieType: MovieKeyType = locationToMovieType(location);
-    const { [MovieType]: movies } = useAppSelector(selectMovie);
+    const movieType: MovieKeyType = locationToMovieType(location);
+    const { [movieType]: movies, status } = useAppSelector(selectMovie);
 
     const dispatch = useAppDispatch();
 
-    const fetchMovie = fetchByMovieType[MovieType];
+    useEffect(() => {
+        if (!movies.length) {
+            dispatchGetMovie(dispatch, movieType)
+        }
+    }, [dispatch, movies, movieType])
 
     useEffect(() => {
-        const fetchMovie = fetchByMovieType[MovieType];
-        if (!movies.length) {
-            dispatch(fetchMovie())
+        if (!!searchText) {
+            dispatch(search(searchText))
         }
-    }, [dispatch, movies, MovieType])
+    }, [dispatch, searchText])
 
-    // console.log(movies);
+    console.log(movies)
 
     return (
         <Container sx={{ mt: 8, py: 4 }} maxWidth="xl">
             <Grid container spacing={4}>
+                {!!searchText && status !== "loading" && !movies.length && <Grid item xs={12}   >
+                    <Typography component="div" variant="button" color="primary" sx={{ textAlign: "center" }} >
+                        Nothing found <SentimentVeryDissatisfiedIcon sx={{ verticalAlign: "middle" }} />
+                    </Typography>
+                </Grid>}
                 {movies.map(({ id, original_title, overview, backdrop_path }: MovieType) => (
                     <Grid item key={id} xs={12} sm={6} md={4} lg={3}>
                         <Card
@@ -68,14 +82,15 @@ function MovieList() {
                         </Card>
                     </Grid>
                 ))}
-                <Grid item xs={12} >
+                {!searchText && <Grid item xs={12} >
+
                     <Button variant="outlined"
-                        onClick={() => fetchMovie && dispatch(fetchMovie())}
+                        onClick={() => dispatchGetMovie(dispatch, movieType)}
                     >
                         <RefreshIcon sx={{ mr: 1 }} />
                         More
                     </Button>
-                </Grid>
+                </Grid>}
             </Grid>
         </Container>
     );

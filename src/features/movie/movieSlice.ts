@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
-import { getNowPlayingMovies, getUpcomingMovies, getTopRatedMovies } from './movieAPI';
+import { getNowPlayingMovies, getUpcomingMovies, getTopRatedMovies, getSearchMovies } from './movieAPI';
 
 export type MovieKeyType = "search" | "nowplaying" | "upcoming" | "toprated";
+
 export type MovieType = {
     adult: boolean,
     backdrop_path: string,
@@ -43,10 +44,10 @@ const initialState: MovieState = {
 
 export const search = createAsyncThunk(
     'Movie/search',
-    async () => {
-        const response = await getNowPlayingMovies();
+    async (query: string = "") => {
+        const response = await getSearchMovies(query, 1);
         console.log(response)
-        return response.data;
+        return response.results || [];
     }
 );
 

@@ -16,14 +16,14 @@ import ListItemText from '@mui/material/ListItemText';
 import { alpha, styled } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import React, { useState } from 'react';
+import React, { EventHandler, KeyboardEvent, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
-import { APP_TITLE } from '../../../constantes/textConstantes';
+import { APP_TITLE, PAGE_TITLES } from '../../../constantes/textConstantes';
 import LogoutUserAvatar from '../../../features/auth/LogoutUserAvatar';
 import MovieList from '../../../features/movie/MovieList';
 import { MovieKeyType, selectMovie } from '../../../features/movie/movieSlice';
-import { locationToMovieType } from './../../../functions/helperFunctions';
 import { useAppSelector } from '../../hooks';
+import { locationToMovieType } from './../../../functions/helperFunctions';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -55,7 +55,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
         paddingLeft: `calc(1em + ${theme.spacing(4)})`,
         transition: theme.transitions.create('width'),
         width: '100%',
@@ -77,12 +76,6 @@ const StyledDrawer = styled(Drawer)(({ theme }) => ({
     },
 }));
 
-const PAGE_TITLES: { [key: string]: string } = {
-    "toprated": "Top rated",
-    "nowplaying": "Now Playing",
-    "upcoming": "Up Comming",
-}
-
 export default function Home() {
 
     const [openDrawer, setOpenDrawer] = useState<boolean>(false)
@@ -94,6 +87,12 @@ export default function Home() {
     const changeMovieType = (MovieType: string) => {
         setOpenDrawer(false)
         history.push(MovieType)
+    }
+
+    const searchPressEnter: EventHandler<KeyboardEvent<HTMLInputElement>> = (e) => {
+        if (e.key === 'Enter') {
+            history.push("/search/" + (e.target as HTMLInputElement).value)
+        }
     }
 
     return (
@@ -115,7 +114,8 @@ export default function Home() {
                             <SearchIcon />
                         </SearchIconWrapper>
                         <StyledInputBase
-                            placeholder="Search…"
+                            onKeyPress={searchPressEnter}
+                            placeholder="Search ⏎"
                             inputProps={{ 'aria-label': 'search' }}
                         />
                     </Search>
@@ -132,20 +132,20 @@ export default function Home() {
                 onClose={() => setOpenDrawer(false)}
             >
                 <List>
-                    <ListItem button onClick={() => changeMovieType("toprated")}>
+                    <ListItem button onClick={() => changeMovieType("/toprated")}>
                         <ListItemIcon>
                             <ExploreIcon />
                         </ListItemIcon>
                         <ListItemText primary={"Top rated"} />
                     </ListItem>
                     <Divider />
-                    <ListItem button onClick={() => changeMovieType("nowplaying")}>
+                    <ListItem button onClick={() => changeMovieType("/nowplaying")}>
                         <ListItemIcon>
                             <TimerIcon />
                         </ListItemIcon>
                         <ListItemText primary={"Now Playing"} />
                     </ListItem>
-                    <ListItem button onClick={() => changeMovieType("upcoming")} >
+                    <ListItem button onClick={() => changeMovieType("/upcoming")} >
                         <ListItemIcon>
                             < EventNoteIcon />
                         </ListItemIcon>

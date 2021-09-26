@@ -2,7 +2,20 @@ import { TMDB_API_KEY } from "../../constantes/config";
 
 export const getApiUrlTMDB = (endpoint: string, page: number | string = 0): string => "https://api.themoviedb.org/3/" + endpoint + "?api_key=" + TMDB_API_KEY + "&page=" + page;
 
+export const getSearchApiUrlTMDB = (page: number | string = 0, query: string = ""): string => "https://api.themoviedb.org/3/search/movie?api_key=" + TMDB_API_KEY + "&query=" + query + "&page=" + page;
+
 export const IMAGE_URL_TMDB: string = "http://image.tmdb.org/t/p/w500/";
+
+export const getSearchMovies = async (query: string, page: number = 0) => {
+    try {
+        const rep = await fetch(getSearchApiUrlTMDB(page, query));
+        const movies = await rep.json()
+        return movies
+    } catch (error: unknown) {
+        console.error(error)
+        return [];
+    }
+};
 
 export const getNowPlayingMovies = async (page: number = 0) => {
     try {
@@ -11,6 +24,7 @@ export const getNowPlayingMovies = async (page: number = 0) => {
         return movies
     } catch (error: unknown) {
         console.error(error)
+        return [];
     }
 };
 
@@ -21,6 +35,7 @@ export const getUpcomingMovies = async (page: number = 0) => {
         return movies
     } catch (error: unknown) {
         console.error(error)
+        return [];
     }
 };
 
@@ -31,6 +46,7 @@ export const getTopRatedMovies = async (page: number = 0) => {
         return movies
     } catch (error: unknown) {
         console.error(error)
+        return [];
     }
 };
 
