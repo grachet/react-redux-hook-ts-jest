@@ -28,7 +28,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Router>
+      <Router basename="/react-redux-hook-ts-jest">
         <Switch>
           <Route path="/login">
             {!!account && <Redirect to='/toprated' />}
