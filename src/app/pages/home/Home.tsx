@@ -21,7 +21,8 @@ import { useHistory, useLocation } from 'react-router';
 import { APP_TITLE, PAGE_TITLES } from '../../../constantes/textConstantes';
 import LogoutUserAvatar from '../../../features/auth/LogoutUserAvatar';
 import MovieList from '../../../features/movie/MovieList';
-import { MovieKeyType, selectMovie } from '../../../features/movie/movieSlice';
+import { selectMovie } from '../../../features/movie/movieSlice';
+import { MovieKeyType } from '../../../features/movie/movieTypes';
 import { useAppSelector } from '../../hooks';
 import { locationToMovieType } from './../../../functions/helperFunctions';
 

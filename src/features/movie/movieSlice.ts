@@ -1,38 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 import { getNowPlayingMovies, getUpcomingMovies, getTopRatedMovies, getSearchMovies, getGenreIdMovies } from './movieAPI';
-
-export type MovieKeyType = "search" | "nowplaying" | "upcoming" | "toprated";
-
-export type GenreAPIType = { id: number, name: string };
-
-export type MovieType = {
-    adult: boolean,
-    backdrop_path: string,
-    genre_ids: number[],
-    id: number,
-    original_language: string,
-    original_title: string,
-    overview: string,
-    popularity: number,
-    poster_path: string,
-    release_date: string,
-    title: string,
-    video: boolean,
-    vote_average: number,
-    vote_count: number,
-};
-export interface MovieState {
-    genre: { [key: number]: string },
-    search: MovieType[]
-    nowplaying: MovieType[];
-    upcoming: MovieType[];
-    toprated: MovieType[];
-    nowplayingPage: number;
-    upcomingPage: number;
-    topratedPage: number;
-    status: 'idle' | 'loading' | 'failed';
-}
+import { GenreAPIType, GenreType, MovieState, MovieType } from './movieTypes';
 
 const initialState: MovieState = {
     genre: {},
@@ -48,18 +17,16 @@ const initialState: MovieState = {
 
 export const getGenre = createAsyncThunk(
     'movie/genre',
-    async () => {
+    async (): Promise<GenreType> => {
         const response = await getGenreIdMovies();
         return response?.reduce((obj: { [key: string]: string }, item: GenreAPIType) => ({ ...obj, [item.id]: item.name }), {}) || {};
     }
 );
 
-
 export const search = createAsyncThunk(
     'movie/search',
-    async (query: string = "") => {
+    async (query: string = ""): Promise<MovieType[]> => {
         const response = await getSearchMovies(query, 1);
-        console.log(response)
         return response?.results || [];
     }
 );
@@ -67,7 +34,7 @@ export const search = createAsyncThunk(
 
 export const toprated = createAsyncThunk(
     'movie/toprated',
-    async (_, { getState }) => {
+    async (_, { getState }): Promise<MovieType[]> => {
         const { movie } = getState() as { movie: MovieState };
         const response = await getTopRatedMovies(movie.topratedPage);
         return response?.results || [];
@@ -76,7 +43,7 @@ export const toprated = createAsyncThunk(
 
 export const nowplaying = createAsyncThunk(
     'movie/nowplaying',
-    async (_, { getState }) => {
+    async (_, { getState }): Promise<MovieType[]> => {
         const { movie } = getState() as { movie: MovieState };
         const response = await getNowPlayingMovies(movie.nowplayingPage);
         return response?.results || [];
@@ -85,7 +52,7 @@ export const nowplaying = createAsyncThunk(
 
 export const upcoming = createAsyncThunk(
     'movie/upcoming',
-    async (_, { getState }) => {
+    async (_, { getState }): Promise<MovieType[]> => {
         const { movie } = getState() as { movie: MovieState };
         const response = await getUpcomingMovies(movie.upcomingPage);
         return response?.results || [];

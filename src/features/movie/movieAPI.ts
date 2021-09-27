@@ -1,9 +1,6 @@
 import { TMDB_API_KEY } from "../../constantes/config";
-import { GenreAPIType, MovieType } from "./movieSlice";
-
-const API_URL_TMDB = "https://api.themoviedb.org/3/";
-
-export const IMAGE_URL_TMDB: string = "http://image.tmdb.org/t/p/w500/";
+import { API_URL_TMDB } from "../../constantes/textConstantes";
+import { GenreAPIType, MovieType } from "./movieTypes";
 
 export const getApiUrlTMDB = (endpoint: string, page: number | string = 0): string => API_URL_TMDB + endpoint + "?api_key=" + TMDB_API_KEY + "&page=" + page;
 

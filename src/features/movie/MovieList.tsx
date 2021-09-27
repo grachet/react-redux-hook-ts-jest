@@ -11,10 +11,9 @@ import { useLocation, useParams } from 'react-router';
 import TextTruncate from 'react-text-truncate';
 import { Dispatch } from 'redux';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { URL_PLACEHOLDER } from '../../constantes/textConstantes';
-import { locationToMovieType } from '../../functions/helperFunctions';
-import { IMAGE_URL_TMDB } from './movieAPI';
-import { getGenre, MovieKeyType, MovieType, nowplaying, search, selectMovie, toprated, upcoming } from './movieSlice';
+import { getBackdropFullURL, locationToMovieType } from '../../functions/helperFunctions';
+import { getGenre, nowplaying, search, selectMovie, toprated, upcoming } from './movieSlice';
+import { MovieKeyType, MovieType, MovieState } from "./movieTypes";
 
 const dispatchGetMovie = (dispatch: Dispatch<any>, movieType: string) => {
     if (movieType === "toprated") {
@@ -31,7 +30,7 @@ function MovieList() {
     const { searchText }: { searchText?: string } = useParams();
     const location = useLocation();
     const movieType: MovieKeyType = locationToMovieType(location);
-    const { [movieType]: movies, status, genre } = useAppSelector(selectMovie);
+    const { [movieType]: movies, status, genre }: MovieState = useAppSelector(selectMovie);
 
     const dispatch = useAppDispatch();
 
@@ -79,7 +78,7 @@ function MovieList() {
                             <CardMedia
                                 component="img"
                                 sx={{ backgroundColor: (theme: Theme) => theme.palette.common.black }}
-                                image={backdrop_path ? IMAGE_URL_TMDB + backdrop_path : URL_PLACEHOLDER}
+                                image={getBackdropFullURL(backdrop_path)}
                                 alt="random"
                             />
                             <Box sx={{ flexGrow: 1, px: 1.5, pt: 1.5 }}>

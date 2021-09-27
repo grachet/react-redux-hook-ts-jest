@@ -1,25 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
+import { ANONYMOUS_ACCOUNT } from "../../constantes/textConstantes";
 import { gapiLogin, gapiLogout } from './authAPI';
-
-const ANONYMOUS_ACCOUNT: AccountType = {
-    email: "Anonymous",
-    profilePictureURL: "https://assets.change.org/photos/3/pz/ur/IZPZUrJczRxOpDB-400x400-noPad.jpg?1528808989",
-    fullName: "Anonymous",
-    isAnonymous: true,
-}
-
-type AccountType = {
-    email: string,
-    profilePictureURL: string,
-    fullName: string,
-    isAnonymous: boolean,
-}
-
-export interface AuthState {
-    account: null | AccountType;
-    status: 'idle' | 'loading' | 'failed';
-}
+import { AccountType, AuthState } from './authTypes';
 
 const initialState: AuthState = {
     account: null,
@@ -28,20 +11,24 @@ const initialState: AuthState = {
 
 export const login = createAsyncThunk(
     'auth/login',
-    async (onlyAlreadySigned: boolean = false) => {
+    async (onlyAlreadySigned: boolean = false): Promise<AccountType | null> => {
         const response = await gapiLogin(onlyAlreadySigned);
-        return {
-            email: response.it.Tt,
-            profilePictureURL: response.it.kK,
-            fullName: response.it.Se,
-            isAnonymous: false
-        };
+        if (response) {
+            return {
+                email: response?.it.Tt,
+                profilePictureURL: response?.it.kK,
+                fullName: response?.it.Se,
+                isAnonymous: false
+            };
+        } else {
+            return null
+        }
     }
 );
 
 export const logout = createAsyncThunk(
     'auth/logout',
-    async (_, { getState }) => {
+    async (_, { getState }): Promise<null> => {
         const { auth } = getState() as { auth: AuthState };
         if (!auth?.account?.isAnonymous) {
             await gapiLogout();

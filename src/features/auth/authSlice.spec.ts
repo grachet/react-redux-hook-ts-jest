@@ -1,6 +1,5 @@
-import authReducer, {
-    AuthState,
-} from './authSlice';
+import authReducer from './authSlice';
+import { AuthState } from './authTypes';
 
 describe('counter reducer', () => {
     const initialState: AuthState = {

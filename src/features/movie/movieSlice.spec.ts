@@ -1,6 +1,5 @@
-import MovieReducer, {
-    MovieState,
-} from './movieSlice';
+import MovieReducer from './movieSlice';
+import { MovieState } from './movieTypes';
 
 describe('counter reducer', () => {
     const initialState: MovieState = {

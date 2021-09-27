@@ -1,10 +1,12 @@
 import { CLIENT_ID_GOOGLE } from "../../constantes/config";
+import { ResponseLoginGapiType } from "./authTypes";
 declare global {
     interface Window { gapi: any; }
 }
+
 const { gapi } = window;
 
-export const gapiLogin = async (onlyAlreadySigned: boolean = false): Promise<any> => {
+export const gapiLogin = async (onlyAlreadySigned: boolean = false): Promise<ResponseLoginGapiType | null> => {
     try {
         await new Promise((resolve, reject) => {
             gapi.load('client:auth2', resolve);
@@ -26,7 +28,7 @@ export const gapiLogin = async (onlyAlreadySigned: boolean = false): Promise<any
     return null
 };
 
-export const gapiLogout = async (): Promise<any> => {
+export const gapiLogout = async (): Promise<boolean> => {
     try {
         const authInstance = gapi.auth2.getAuthInstance();
         await authInstance.signOut();
