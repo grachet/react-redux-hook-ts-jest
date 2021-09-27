@@ -1,14 +1,12 @@
 import { TMDB_API_KEY } from "../../constantes/config";
-import { API_URL_TMDB } from "../../constantes/textConstantes";
+import { API_URL_TMDB } from "../../constantes/constantes";
 import { GenreAPIType, MovieType } from "./movieTypes";
 
-export const getApiUrlTMDB = (endpoint: string, page: number | string = 0): string => API_URL_TMDB + endpoint + "?api_key=" + TMDB_API_KEY + "&page=" + page;
-
-export const getSearchApiUrlTMDB = (page: number | string = 0, query: string = ""): string => API_URL_TMDB + "search/movie?api_key=" + TMDB_API_KEY + "&query=" + query + "&page=" + page;
+export const getApiUrlTMDB = (endpoint: string, page: number | string = 0): string => `${API_URL_TMDB + endpoint}?api_key=${TMDB_API_KEY}&page=${page}`;
 
 export const getGenreIdMovies = async (): Promise<GenreAPIType[]> => {
     try {
-        const rep = await fetch(API_URL_TMDB + "genre/movie/list?api_key=" + TMDB_API_KEY);
+        const rep = await fetch(`${API_URL_TMDB}genre/movie/list?api_key=${TMDB_API_KEY}`);
         const json = await rep.json()
         return json.genres;
     } catch (error: unknown) {
@@ -19,7 +17,7 @@ export const getGenreIdMovies = async (): Promise<GenreAPIType[]> => {
 
 export const getSearchMovies = async (query: string, page: number = 0): Promise<{ results: MovieType[] } | null> => {
     try {
-        const rep = await fetch(getSearchApiUrlTMDB(page, query));
+        const rep = await fetch(`${API_URL_TMDB}search/movie?api_key=${TMDB_API_KEY}&query=${query}&page=${page}`);
         const movies = await rep.json()
         return movies
     } catch (error: unknown) {

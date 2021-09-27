@@ -10,7 +10,7 @@ import { default as React, useEffect } from 'react';
 import { useLocation, useParams } from 'react-router';
 import TextTruncate from 'react-text-truncate';
 import { Dispatch } from 'redux';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { getBackdropFullURL, locationToMovieType } from '../../functions/helperFunctions';
 import { getGenre, nowplaying, search, selectMovie, toprated, upcoming } from './movieSlice';
 import { MovieKeyType, MovieType, MovieState } from "./movieTypes";

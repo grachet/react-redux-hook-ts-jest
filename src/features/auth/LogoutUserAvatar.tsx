@@ -1,16 +1,17 @@
 import { IconButton } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import React from 'react';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import Tooltip from '@mui/material/Tooltip';
 import {
     logout,
     selectAuth
 } from './authSlice';
+import { AccountType } from './authTypes';
 
 function LogoutUserAvatar() {
 
-    const account = useAppSelector(selectAuth);
+    const account: AccountType | null = useAppSelector(selectAuth);
     const dispatch = useAppDispatch();
 
     return (

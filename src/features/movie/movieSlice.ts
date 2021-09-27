@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { RootState } from '../../app/store';
+import { RootState } from '../../redux/store';
 import { getNowPlayingMovies, getUpcomingMovies, getTopRatedMovies, getSearchMovies, getGenreIdMovies } from './movieAPI';
 import { GenreAPIType, GenreType, MovieState, MovieType } from './movieTypes';
 

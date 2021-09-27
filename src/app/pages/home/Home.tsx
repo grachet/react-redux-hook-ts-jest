@@ -18,64 +18,13 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import React, { EventHandler, KeyboardEvent, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
-import { APP_TITLE, PAGE_TITLES } from '../../../constantes/textConstantes';
+import { APP_TITLE, PAGE_TITLES } from '../../../constantes/constantes';
 import LogoutUserAvatar from '../../../features/auth/LogoutUserAvatar';
 import MovieList from '../../../features/movie/MovieList';
 import { selectMovie } from '../../../features/movie/movieSlice';
 import { MovieKeyType } from '../../../features/movie/movieTypes';
-import { useAppSelector } from '../../hooks';
+import { useAppSelector } from '../../../redux/hooks';
 import { locationToMovieType } from './../../../functions/helperFunctions';
-
-const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
-        backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginLeft: 0,
-    marginRight: theme.spacing(2),
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(1),
-        width: 'auto',
-    },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'inherit',
-    '& .MuiInputBase-input': {
-        padding: theme.spacing(1, 1, 1, 0),
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-            width: '12ch',
-            '&:focus': {
-                width: '20ch',
-            },
-        },
-    },
-}));
-
-const StyledDrawer = styled(Drawer)(({ theme }) => ({
-    width: 300,
-    flexShrink: 0,
-    '& .MuiDrawer-paper': {
-        width: 300,
-        boxSizing: 'border-box',
-    },
-}));
 
 export default function Home() {
 
@@ -157,3 +106,54 @@ export default function Home() {
         </>
     );
 }
+
+const Search = styled('div')(({ theme }) => ({
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    '&:hover': {
+        backgroundColor: alpha(theme.palette.common.white, 0.25),
+    },
+    marginLeft: 0,
+    marginRight: theme.spacing(2),
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+        marginLeft: theme.spacing(1),
+        width: 'auto',
+    },
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: 'inherit',
+    '& .MuiInputBase-input': {
+        padding: theme.spacing(1, 1, 1, 0),
+        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+        transition: theme.transitions.create('width'),
+        width: '100%',
+        [theme.breakpoints.up('sm')]: {
+            width: '12ch',
+            '&:focus': {
+                width: '20ch',
+            },
+        },
+    },
+}));
+
+const StyledDrawer = styled(Drawer)(({ theme }) => ({
+    width: 300,
+    flexShrink: 0,
+    '& .MuiDrawer-paper': {
+        width: 300,
+        boxSizing: 'border-box',
+    },
+}));

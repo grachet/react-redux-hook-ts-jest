@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import React, { useEffect } from 'react';
-import { useAppDispatch } from '../../app/hooks';
+import { useAppDispatch } from '../../redux/hooks';
 import BathtubIcon from '@mui/icons-material/Bathtub';
 import {
     login,
@@ -28,7 +28,6 @@ function LoginButton() {
     return (
         <>
             <GoogleButton
-                // disabled={!loaded}
                 variant="contained"
                 onClick={() => dispatch(login())}
             >

@@ -1,5 +1,5 @@
 import { Location } from 'history';
-import { IMAGE_URL_TMDB, URL_PLACEHOLDER } from '../constantes/textConstantes';
+import { IMAGE_URL_TMDB, URL_PLACEHOLDER } from '../constantes/constantes';
 import { MovieKeyType } from '../features/movie/movieTypes';
 
 export const locationToMovieType = (location: Location<unknown>): MovieKeyType => {

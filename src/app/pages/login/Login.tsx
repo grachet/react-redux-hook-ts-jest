@@ -4,10 +4,11 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
+import { styled } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import React from 'react';
-import { APP_TITLE, LOGIN_TITLE, MY_NAME, PORTFOLIO_URL } from '../../../constantes/textConstantes';
+import { APP_TITLE, LOGIN_TITLE, MY_NAME, PORTFOLIO_URL } from '../../../constantes/constantes';
 import LoginButton from '../../../features/auth/LoginButton';
 
 function Copyright() {
@@ -23,15 +24,16 @@ function Copyright() {
     );
 }
 
-export default function Home() {
+const RootBox = styled(Box)(() => ({
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    minHeight: "100vh"
+}));
 
+export default function Home() {
     return (
-        <Box sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            minHeight: "100vh"
-        }}>
+        <RootBox>
             <AppBar position="relative">
                 <Toolbar>
                     <SlowMotionVideoIcon color="primary" sx={{ mr: 1 }} />
@@ -67,6 +69,6 @@ export default function Home() {
             <Box sx={{ p: 6 }} component="footer">
                 <Copyright />
             </Box>
-        </Box >
+        </RootBox >
     );
 }

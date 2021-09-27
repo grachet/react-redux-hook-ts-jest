@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { RootState } from '../../app/store';
-import { ANONYMOUS_ACCOUNT } from "../../constantes/textConstantes";
+import { RootState } from '../../redux/store';
+import { ANONYMOUS_ACCOUNT } from "../../constantes/constantes";
 import { gapiLogin, gapiLogout } from './authAPI';
 import { AccountType, AuthState } from './authTypes';
 

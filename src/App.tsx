@@ -4,8 +4,7 @@ import React from 'react';
 import {
   BrowserRouter as Router, Route, Switch, Redirect
 } from "react-router-dom";
-import './App.css';
-import { useAppSelector } from './app/hooks';
+import { useAppSelector } from './redux/hooks';
 import Home from './app/pages/home/Home';
 import Login from './app/pages/login/Login';
 import { selectAuth } from './features/auth/authSlice';

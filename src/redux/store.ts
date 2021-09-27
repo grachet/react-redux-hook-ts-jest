@@ -1,6 +1,6 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import authReducer from '../features/auth/authSlice';
-import movieReducer from './../features/movie/movieSlice';
+import movieReducer from '../features/movie/movieSlice';
 
 export const store = configureStore({
   reducer: {
