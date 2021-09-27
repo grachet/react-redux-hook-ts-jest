@@ -1,30 +1,29 @@
 import EventNoteIcon from '@mui/icons-material/EventNote';
 import ExploreIcon from '@mui/icons-material/Explore';
 import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
 import SlowMotionVideoIcon from '@mui/icons-material/SlowMotionVideo';
 import TimerIcon from '@mui/icons-material/Timer';
 import { IconButton, LinearProgress } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
-import InputBase from '@mui/material/InputBase';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { alpha, styled } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import React, { EventHandler, KeyboardEvent, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
-import { APP_TITLE, PAGE_TITLES } from '../../../constantes/constantes';
-import LogoutUserAvatar from '../../../features/auth/LogoutUserAvatar';
-import MovieList from '../../../features/movie/MovieList';
-import { selectMovie } from '../../../features/movie/movieSlice';
-import { MovieKeyType } from '../../../features/movie/movieTypes';
-import { useAppSelector } from '../../../redux/hooks';
-import { locationToMovieType } from './../../../functions/helperFunctions';
+import { APP_TITLE, PAGE_TITLES } from '../../constantes/constantes';
+import LogoutUserAvatar from '../../features/auth/LogoutUserAvatar';
+import MovieList from '../../features/movie/MovieList';
+import { selectMovie } from '../../features/movie/movieSlice';
+import { MovieKeyType } from '../../features/movie/movieTypes';
+import { locationToMovieType } from '../../functions/helperFunctions';
+import { useAppSelector } from '../../redux/hooks';
+import SearchBar from '../components/SearchBar';
 
 export default function Home() {
 
@@ -37,12 +36,6 @@ export default function Home() {
     const changeMovieType = (MovieType: string) => {
         setOpenDrawer(false)
         history.push(MovieType)
-    }
-
-    const searchPressEnter: EventHandler<KeyboardEvent<HTMLInputElement>> = (e) => {
-        if (e.key === 'Enter') {
-            history.push("/search/" + (e.target as HTMLInputElement).value)
-        }
     }
 
     return (
@@ -59,16 +52,7 @@ export default function Home() {
                             {PAGE_TITLES[PageType]}
                         </Typography>
                     </Typography>
-                    <Search>
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            onKeyPress={searchPressEnter}
-                            placeholder="Search ⏎"
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </Search>
+                    <SearchBar />
                     <LogoutUserAvatar />
                 </Toolbar>
                 {status === 'loading' && <LinearProgress />}
@@ -106,48 +90,6 @@ export default function Home() {
         </>
     );
 }
-
-const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
-        backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginLeft: 0,
-    marginRight: theme.spacing(2),
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(1),
-        width: 'auto',
-    },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'inherit',
-    '& .MuiInputBase-input': {
-        padding: theme.spacing(1, 1, 1, 0),
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-            width: '12ch',
-            '&:focus': {
-                width: '20ch',
-            },
-        },
-    },
-}));
 
 const StyledDrawer = styled(Drawer)(({ theme }) => ({
     width: 300,

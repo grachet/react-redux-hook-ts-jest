@@ -2,34 +2,14 @@ import SlowMotionVideoIcon from '@mui/icons-material/SlowMotionVideo';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import React from 'react';
-import { APP_TITLE, LOGIN_TITLE, MY_NAME, PORTFOLIO_URL } from '../../../constantes/constantes';
-import LoginButton from '../../../features/auth/LoginButton';
-
-function Copyright() {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href={PORTFOLIO_URL}>
-                {MY_NAME}
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
-
-const RootBox = styled(Box)(() => ({
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    minHeight: "100vh"
-}));
+import { APP_TITLE, LOGIN_TITLE } from '../../constantes/constantes';
+import LoginButton from '../../features/auth/LoginButton';
+import Copyright from '../components/Copyright';
 
 export default function Home() {
     return (
@@ -72,3 +52,10 @@ export default function Home() {
         </RootBox >
     );
 }
+
+const RootBox = styled(Box)(() => ({
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    minHeight: "100vh"
+}));

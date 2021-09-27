@@ -5,8 +5,8 @@ import {
   BrowserRouter as Router, Route, Switch, Redirect
 } from "react-router-dom";
 import { useAppSelector } from './redux/hooks';
-import Home from './app/pages/home/Home';
-import Login from './app/pages/login/Login';
+import Home from './app/pages/Home';
+import Login from './app/pages/Login';
 import { selectAuth } from './features/auth/authSlice';
 
 const theme = createTheme({
