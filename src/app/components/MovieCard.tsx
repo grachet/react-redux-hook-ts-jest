@@ -2,7 +2,6 @@ import { Box, CardActionArea, CardContent, CardHeader, Rating, Theme } from '@mu
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import { styled } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
 import TextTruncate from 'react-text-truncate';
 import { GenreType, MovieType } from '../../features/movie/movieTypes';

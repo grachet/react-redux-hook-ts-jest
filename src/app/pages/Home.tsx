@@ -24,8 +24,13 @@ import { MovieKeyType } from '../../features/movie/movieTypes';
 import { locationToMovieType } from '../../functions/helperFunctions';
 import { useAppSelector } from '../../redux/hooks';
 import SearchBar from '../components/SearchBar';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 export default function Home() {
+
+    const theme = useTheme();
+    const matchePhone = !useMediaQuery(theme.breakpoints.up('sm'));
 
     const [openDrawer, setOpenDrawer] = useState<boolean>(false)
     const location = useLocation();
@@ -45,13 +50,15 @@ export default function Home() {
                     <IconButton size="large" color="inherit" sx={{ mr: 4 }} onClick={() => setOpenDrawer(true)}>
                         <MenuIcon />
                     </IconButton>
-                    <SlowMotionVideoIcon color="primary" sx={{ mr: 1 }} />
-                    <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
-                        {APP_TITLE}
-                        <Typography variant="button" color="textSecondary" component="span" sx={{ ml: 2 }}>
-                            {PAGE_TITLES[PageType]}
+                    {!matchePhone && <>
+                        <SlowMotionVideoIcon color="primary" sx={{ mr: 1 }} />
+                        <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
+                            {APP_TITLE}
+                            <Typography variant="button" color="textSecondary" component="span" sx={{ ml: 2 }}>
+                                {PAGE_TITLES[PageType]}
+                            </Typography>
                         </Typography>
-                    </Typography>
+                    </>}
                     <SearchBar />
                     <LogoutUserAvatar />
                 </Toolbar>
