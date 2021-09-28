@@ -1,3 +1,8 @@
+export interface AuthState {
+    account: null | AccountType;
+    status: 'idle' | 'loading' | 'failed';
+}
+
 export type AccountType = {
     email: string,
     profilePictureURL: string,
@@ -13,7 +18,21 @@ export type ResponseLoginGapiType = {
     }
 }
 
-export interface AuthState {
-    account: null | AccountType;
-    status: 'idle' | 'loading' | 'failed';
+export type AuthInstanceType = {
+    currentUser: {
+        Xd: ResponseLoginGapiType
+    },
+    isSignedIn: {
+        get: () => boolean,
+    },
+    signIn: () => Promise<ResponseLoginGapiType>,
+    signOut: () => Promise<any>,
+}
+
+export type GapiType = {
+    load: (type: string, f: (a?: any) => void) => any,
+    auth2: {
+        init: (args: { [key: string]: string | number }) => Promise<any>,
+        getAuthInstance: () => AuthInstanceType,
+    }
 }

@@ -3,7 +3,7 @@ import { IMAGE_URL_TMDB, URL_PLACEHOLDER_BACKDROP, URL_PLACEHOLDER_POSTER } from
 import { MovieKeyType } from '../features/movie/movieTypes';
 
 export const locationToMovieType = (location: Location<unknown>): MovieKeyType => {
-    const name: string = location.pathname.substring(1);
+    const name: string = location?.pathname?.substring(1);
     if (name === "upcoming" || name === "nowplaying" || name === "toprated") {
         return name;
     } else {

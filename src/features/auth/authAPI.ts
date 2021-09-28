@@ -1,19 +1,19 @@
 import { CLIENT_ID_GOOGLE } from "../../constantes/config";
-import { ResponseLoginGapiType } from "./authTypes";
+import { ResponseLoginGapiType, GapiType } from "./authTypes";
 declare global {
     interface Window { gapi: any; }
 }
 
-const { gapi } = window;
+export const { gapi }: { gapi: GapiType } = window;
 
 export const gapiLogin = async (onlyAlreadySigned: boolean = false): Promise<ResponseLoginGapiType | null> => {
     try {
         await new Promise((resolve, reject) => {
             gapi.load('client:auth2', resolve);
         });
-        await window.gapi.auth2.init({
+        await gapi.auth2.init({
             client_id: CLIENT_ID_GOOGLE,
-            scope: "https://www.googleapis.com/auth/youtube.readonly",
+            // scope: "https://www.googleapis.com/auth/youtube.readonly",
         });
         const authInstance = gapi.auth2.getAuthInstance();
         const isSignedIn = authInstance.isSignedIn.get();
@@ -23,7 +23,7 @@ export const gapiLogin = async (onlyAlreadySigned: boolean = false): Promise<Res
             return await authInstance.signIn();
         }
     } catch (error: unknown) {
-        console.error(error)
+        // console.error(error)
     }
     return null
 };
