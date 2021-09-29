@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../redux/store';
 import { ANONYMOUS_ACCOUNT } from "../../constantes/constantes";
-import { gapiLogin, gapiLogout } from './authAPI';
+import authService from './authService';
 import { AccountType, AuthState } from './authTypes';
 
 const initialState: AuthState = {
@@ -12,7 +12,7 @@ const initialState: AuthState = {
 export const login = createAsyncThunk(
     'auth/login',
     async (onlyAlreadySigned: boolean = false): Promise<AccountType | null> => {
-        const response = await gapiLogin(onlyAlreadySigned);
+        const response = await authService.gapiLogin(onlyAlreadySigned);
         if (response) {
             return {
                 email: response?.it.Tt,
@@ -31,7 +31,7 @@ export const logout = createAsyncThunk(
     async (_, { getState }): Promise<null> => {
         const { auth } = getState() as { auth: AuthState };
         if (!auth?.account?.isAnonymous) {
-            await gapiLogout();
+            await authService.gapiLogout();
         }
         return null;
     }

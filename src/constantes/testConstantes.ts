@@ -35,10 +35,10 @@ export const GENRE_TEST: GenreType = {
     10749: "Romance",
 };
 
-export const GAPI_LOGIN_USER: ResponseLoginGapiType = {
+export const GAPI_LOGIN_USER_TEST: ResponseLoginGapiType = {
     it: {
         Tt: "guillaume.rachet@gmail.com",
-        kK: "sqdsqfdsfsfsfsfd",
+        kK: "testurl",
         Se: "Guillaume Rachet",
     }
 };
@@ -49,12 +49,12 @@ export const GAPI_MOCK_TEST: GapiType = {
         init: (args: { [key: string]: string | number }) => { return Promise.resolve({}); },
         getAuthInstance: () => ({
             currentUser: {
-                Xd: GAPI_LOGIN_USER
+                Xd: GAPI_LOGIN_USER_TEST
             },
             isSignedIn: {
                 get: () => true,
             },
-            signIn: () => { return Promise.resolve(GAPI_LOGIN_USER); },
+            signIn: () => { return Promise.resolve(GAPI_LOGIN_USER_TEST); },
             signOut: () => { return Promise.resolve(null); },
         }),
     }
