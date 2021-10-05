@@ -2,11 +2,11 @@
 
 A small example of the technologies that I use daily.
 
-Simple example with google connexion and The movie database API.
+Simple example with google connexion and The-Movie-Database API.
 
 [Demo](https://grachet.github.io/react-redux-hook-ts-jest/) 
 
-[Provacy Policy](https://www.privacypolicies.com/live/72f23374-430c-4435-af15-be751f1c63e1) 
+[Privacy Policy](https://www.privacypolicies.com/live/72f23374-430c-4435-af15-be751f1c63e1) 
 
 Tech :
 
@@ -20,12 +20,18 @@ Tech :
 
 ### Run
 
-You will need Oauth2 Client ID + TMDB API V3 key in /src/constantes/config.ts
+You will need to create a file with API keys : /src/constantes/config.ts
+
+``` 
+export const CLIENT_ID_GOOGLE = "something-something.apps.googleusercontent.com";
+export const TMDB_API_KEY = "ddskdj6...";
+``` 
 
 ``` 
  npm i
  npm start
 ``` 
+
 ### Deploy
 
 ``` 
