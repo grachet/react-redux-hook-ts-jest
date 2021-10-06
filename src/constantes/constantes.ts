@@ -2,7 +2,7 @@ import { AccountType } from "../features/auth/authTypes";
 
 export const APP_TITLE = "Movies";
 export const MY_NAME = "Guillaume Rachet";
-export const LOGIN_TITLE = "Find the movie you are looking for.";
+export const LOGIN_TITLE = "Unlimited movies, TV shows, and more. Watch anywhere.";
 
 export const REPOSITORY_URL = "https://github.com/grachet/react-redux-hook-ts-jest";
 export const PORTFOLIO_URL = "https://grachet.github.io/";
