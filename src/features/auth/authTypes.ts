@@ -10,22 +10,22 @@ export type AccountType = {
     isAnonymous: boolean,
 }
 
-export type ResponseLoginGapiType = {
-    it: {
-        Tt: string,
-        kK: string,
-        Se: string,
-    }
+export type GapiUserType = { 
+    get: () => ({
+        getBasicProfile: ()=> ({ 
+             getEmail : () => string,
+             getImageUrl : () => string,
+             getName : () => string, 
+        })
+    });
 }
-
+ 
 export type AuthInstanceType = {
-    currentUser: {
-        Xd: ResponseLoginGapiType
-    },
+    currentUser: GapiUserType ,
     isSignedIn: {
         get: () => boolean,
     },
-    signIn: () => Promise<ResponseLoginGapiType>,
+    signIn: () => Promise<GapiUserType>,
     signOut: () => Promise<any>,
 }
 

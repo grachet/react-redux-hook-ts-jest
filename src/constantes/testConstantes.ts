@@ -1,5 +1,5 @@
-import { AccountType, GapiType, ResponseLoginGapiType } from "../features/auth/authTypes";
-import { GenreType, MovieType } from "../features/movie/movieTypes";
+import { AccountType, GapiType, GapiUserType } from "../features/auth/authTypes";
+import { GenreAPIType, GenreType, MovieType } from "../features/movie/movieTypes";
 
 export const ACCOUNT_TEST: AccountType = {
     email: "guillaume.rachet@gmail.com",
@@ -35,22 +35,39 @@ export const GENRE_TEST: GenreType = {
     10749: "Romance",
 };
 
-export const GAPI_LOGIN_USER_TEST: ResponseLoginGapiType = {
-    it: {
-        Tt: "guillaume.rachet@gmail.com",
-        kK: "testurl",
-        Se: "Guillaume Rachet",
-    }
+export const GENRE_ARRAY_TEST: GenreAPIType[] = [
+    {
+        id: 35,
+        name: "Comedy"
+    },
+    {
+        id: 18,
+        name: "Drama"
+    },
+    {
+        id: 10749,
+        name: "Romance"
+    },
+];
+
+export const GAPI_LOGIN_USER_TEST: GapiUserType = {
+    get: () => ({
+        getBasicProfile: ()=> ({ 
+            getEmail : () => "guillaume.rachet@gmail.com",
+            getImageUrl : () => "testurl",
+            getName : () => "Guillaume Rachet",  
+        })
+    })
 };
+
+
 
 export const GAPI_MOCK_TEST: GapiType = {
     load: (_, f) => f(),
     auth2: {
         init: (args: { [key: string]: string | number }) => { return Promise.resolve({}); },
         getAuthInstance: () => ({
-            currentUser: {
-                Xd: GAPI_LOGIN_USER_TEST
-            },
+            currentUser: GAPI_LOGIN_USER_TEST,
             isSignedIn: {
                 get: () => true,
             },

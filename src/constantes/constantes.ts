@@ -8,7 +8,7 @@ export const REPOSITORY_URL = "https://github.com/grachet/react-redux-hook-ts-je
 export const PORTFOLIO_URL = "https://grachet.github.io/";
 
 export const API_URL_TMDB = "https://api.themoviedb.org/3/";
-export const IMAGE_URL_TMDB: string = "http://image.tmdb.org/t/p/w500/";
+export const IMAGE_URL_TMDB: string = "https://image.tmdb.org/t/p/w500/";
 
 export const URL_PLACEHOLDER_BACKDROP = process.env.PUBLIC_URL + "/assets/placeholder_background.png";
 export const URL_PLACEHOLDER_POSTER = process.env.PUBLIC_URL + "/assets/placeholder_background.png";

@@ -2,19 +2,13 @@ import { ANONYMOUS_ACCOUNT } from '../../constantes/constantes';
 import { GAPI_LOGIN_USER_TEST } from '../../constantes/testConstantes';
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import authReducer, { login, loginAnonymous } from './authSlice';
-import { AuthState } from './authTypes';
+import authReducer, { initialAuthState, login, loginAnonymous } from './authSlice'; 
 import { ACCOUNT_TEST } from './../../constantes/testConstantes';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-jest.mock('./authService');
-
-const initialState: AuthState = {
-    account: null,
-    status: 'idle',
-};
+jest.mock('./authService'); 
 
 describe('Auth Reducer', () => {
 
@@ -26,7 +20,7 @@ describe('Auth Reducer', () => {
     });
 
     it('should handle login anonymous', () => {
-        const actual = authReducer(initialState, loginAnonymous());
+        const actual = authReducer(initialAuthState, loginAnonymous());
         expect(actual.account).toEqual(ANONYMOUS_ACCOUNT);
     });
 
@@ -46,10 +40,7 @@ describe('AuthReducer Login', () => {
             }
         ];
 
-        const store = mockStore({
-            account: null,
-            status: 'idle',
-        });
+        const store = mockStore(initialAuthState);
 
         return store.dispatch(login()).then(() => {
             expect(store.getActions()).toEqual(expectedActions)

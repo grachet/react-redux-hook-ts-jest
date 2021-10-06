@@ -1,11 +1,11 @@
-import { GAPI_LOGIN_USER_TEST } from "../../../constantes/testConstantes";
+import { ACCOUNT_TEST } from "../../../constantes/testConstantes";
 
 class AuthService {
     async gapiLogin() {
-        return GAPI_LOGIN_USER_TEST;
+        return ACCOUNT_TEST;
     };
     async gapiLogout() {
-        return false;
+        return true;
     };
 }
 

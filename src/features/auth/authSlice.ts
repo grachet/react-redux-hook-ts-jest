@@ -4,7 +4,7 @@ import { ANONYMOUS_ACCOUNT } from "../../constantes/constantes";
 import authService from './authService';
 import { AccountType, AuthState } from './authTypes';
 
-const initialState: AuthState = {
+export const initialAuthState: AuthState = {
     account: null,
     status: 'idle',
 };
@@ -12,34 +12,21 @@ const initialState: AuthState = {
 export const login = createAsyncThunk(
     'auth/login',
     async (onlyAlreadySigned: boolean = false): Promise<AccountType | null> => {
-        const response = await authService.gapiLogin(onlyAlreadySigned);
-        if (response) {
-            return {
-                email: response?.it.Tt,
-                profilePictureURL: response?.it.kK,
-                fullName: response?.it.Se,
-                isAnonymous: false
-            };
-        } else {
-            return null
-        }
+        return await authService.gapiLogin(onlyAlreadySigned); 
     }
 );
 
 export const logout = createAsyncThunk(
     'auth/logout',
-    async (_, { getState }): Promise<null> => {
-        const { auth } = getState() as { auth: AuthState };
-        if (!auth?.account?.isAnonymous) {
-            await authService.gapiLogout();
-        }
+    async (): Promise<null> => {
+        await authService.gapiLogout(); 
         return null;
     }
 );
 
 export const authSlice = createSlice({
     name: 'auth',
-    initialState,
+    initialState: initialAuthState,
     reducers: {
         loginAnonymous: (state) => { state.account = ANONYMOUS_ACCOUNT },
     },

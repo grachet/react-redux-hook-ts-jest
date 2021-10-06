@@ -1,5 +1,5 @@
 import { CLIENT_ID_GOOGLE } from "../../constantes/config";
-import { ResponseLoginGapiType, GapiType } from "./authTypes";
+import {   GapiType, AccountType } from "./authTypes";
 declare global {
     interface Window { gapi: any; }
 }
@@ -11,7 +11,7 @@ class AuthService {
         this.gapi = window.gapi;
     }
 
-    async gapiLogin(onlyAlreadySigned: boolean = false): Promise<ResponseLoginGapiType | null> {
+    async gapiLogin(onlyAlreadySigned: boolean = false): Promise<AccountType | null> {
         try {
             await new Promise((resolve, reject) => {
                 this.gapi.load('client:auth2', resolve);
@@ -22,22 +22,36 @@ class AuthService {
             });
             const authInstance = this.gapi.auth2.getAuthInstance();
             const isSignedIn = authInstance.isSignedIn.get();
-            if (isSignedIn) {
-                return authInstance.currentUser.Xd;
-            } else if (!onlyAlreadySigned) {
-                return await authInstance.signIn();
+
+            if (onlyAlreadySigned && !isSignedIn) {
+                return null;
             }
-            return null
+
+            if (!isSignedIn) {
+                await authInstance.signIn();  
+            }  
+
+            const profile = authInstance.currentUser.get().getBasicProfile();
+
+            return { 
+                email:  profile.getEmail(),
+                profilePictureURL: profile.getImageUrl(),
+                fullName: profile.getName(),
+                isAnonymous: false
+            } 
         } catch (error: unknown) {
-            // console.error(error)
+            console.error(error)
         }
         return null
-    };
+    }; 
 
     async gapiLogout(): Promise<boolean> {
         try {
             const authInstance = this.gapi.auth2.getAuthInstance();
-            await authInstance.signOut();
+            const isSignedIn = authInstance.isSignedIn.get();
+            if (isSignedIn) {
+                await authInstance.signOut();
+            } 
             return true;
         } catch (error: unknown) {
             console.error(error)
