@@ -2,7 +2,7 @@ import { ANONYMOUS_ACCOUNT } from '../../constantes/constantes';
 import { GAPI_LOGIN_USER_TEST } from '../../constantes/testConstantes';
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import authReducer, { initialAuthState, login, loginAnonymous } from './authSlice'; 
+import authReducer, { initialAuthState, login, loginAnonymous, logout } from './authSlice'; 
 import { ACCOUNT_TEST } from './../../constantes/testConstantes';
 
 const middlewares = [thunk];
@@ -26,17 +26,20 @@ describe('Auth Reducer', () => {
 
 });
 
-describe('AuthReducer Login', () => {
+describe('AuthReducer Login / Logout', () => {
 
-    it('should pass login gapi', async () => {
+    it('Login with Gapi', async () => {
 
         const expectedActions = [
             {
-                type: login.pending.type
+                meta: expect.anything(),
+                type: login.pending.type,
+                payload: undefined,
             },
             {
+                meta: expect.anything(),
                 type: login.fulfilled.type,
-                payload: GAPI_LOGIN_USER_TEST
+                payload: ACCOUNT_TEST
             }
         ];
 
@@ -48,12 +51,27 @@ describe('AuthReducer Login', () => {
 
     });
 
-    // describe('should fail login gapi', () => {
-    //     const error = new Error('FAIL!');
-    //     beforeEach(() => {
-    //         login.mockRejectedValue(error);
-    //     });
-    //     it('dispatches failure');
-    // });
+    it('Logout with Gapi', async () => {
+
+        const expectedActions = [
+            {
+                meta: expect.anything(),
+                type: logout.pending.type,
+                payload: undefined,
+            },
+            {
+                meta: expect.anything(),
+                type: logout.fulfilled.type,
+                payload: null
+            }
+        ];
+
+        const store = mockStore(initialAuthState);
+
+        return store.dispatch(logout()).then(() => {
+            expect(store.getActions()).toEqual(expectedActions)
+        })
+
+    }); 
 
 });

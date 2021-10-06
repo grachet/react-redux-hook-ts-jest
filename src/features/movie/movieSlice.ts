@@ -23,7 +23,7 @@ export const getGenre = createAsyncThunk(
     }
 );
 
-export const search = createAsyncThunk(
+export const getSearch = createAsyncThunk(
     'movie/search',
     async (query: string = ""): Promise<MovieType[]> => {
         const response = await movieService.getSearchMovies(query, 1);
@@ -32,29 +32,29 @@ export const search = createAsyncThunk(
 );
 
 
-export const toprated = createAsyncThunk(
+export const getTopRated = createAsyncThunk(
     'movie/toprated',
     async (_, { getState }): Promise<MovieType[]> => {
         const { movie } = getState() as { movie: MovieState };
-        const response = await movieService.getTopRatedMovies(movie.topratedPage);
+        const response = await movieService.getTopRatedMovies(movie?.topratedPage);
         return response?.results || [];
     }
 );
 
-export const nowplaying = createAsyncThunk(
+export const getNowPlaying = createAsyncThunk(
     'movie/nowplaying',
     async (_, { getState }): Promise<MovieType[]> => {
         const { movie } = getState() as { movie: MovieState };
-        const response = await movieService.getNowPlayingMovies(movie.nowplayingPage);
+        const response = await movieService.getNowPlayingMovies(movie?.nowplayingPage);
         return response?.results || [];
     }
 );
 
-export const upcoming = createAsyncThunk(
+export const getUpcoming = createAsyncThunk(
     'movie/upcoming',
     async (_, { getState }): Promise<MovieType[]> => {
         const { movie } = getState() as { movie: MovieState };
-        const response = await movieService.getUpcomingMovies(movie.upcomingPage);
+        const response = await movieService.getUpcomingMovies(movie?.upcomingPage);
         return response?.results || [];
     }
 );
@@ -73,33 +73,33 @@ export const movieSlice = createSlice({
                 state.status = 'idle';
                 state.genre = action.payload;
             })
-            .addCase(search.pending, (state) => {
+            .addCase(getSearch.pending, (state) => {
                 state.status = 'loading';
             })
-            .addCase(search.fulfilled, (state, action) => {
+            .addCase(getSearch.fulfilled, (state, action) => {
                 state.status = 'idle';
                 state.search = action.payload;
             })
-            .addCase(nowplaying.pending, (state) => {
+            .addCase(getNowPlaying.pending, (state) => {
                 state.status = 'loading';
             })
-            .addCase(nowplaying.fulfilled, (state, action) => {
+            .addCase(getNowPlaying.fulfilled, (state, action) => {
                 state.status = 'idle';
                 state.nowplaying = [...state.nowplaying, ...action.payload];
                 state.nowplayingPage++;
             })
-            .addCase(upcoming.pending, (state) => {
+            .addCase(getUpcoming.pending, (state) => {
                 state.status = 'loading';
             })
-            .addCase(upcoming.fulfilled, (state, action) => {
+            .addCase(getUpcoming.fulfilled, (state, action) => {
                 state.status = 'idle';
                 state.upcoming = [...state.upcoming, ...action.payload];
                 state.upcomingPage++;
             })
-            .addCase(toprated.pending, (state) => {
+            .addCase(getTopRated.pending, (state) => {
                 state.status = 'loading';
             })
-            .addCase(toprated.fulfilled, (state, action) => {
+            .addCase(getTopRated.fulfilled, (state, action) => {
                 state.status = 'idle';
                 state.toprated = [...state.toprated, ...action.payload];
                 state.topratedPage++;

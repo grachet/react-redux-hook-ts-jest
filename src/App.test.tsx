@@ -7,31 +7,26 @@ import MovieCard from './app/components/MovieCard';
 import MovieDialogue from './app/components/MovieDialogue';
 import Home from './app/pages/Home';
 import Login from './app/pages/Login';
-import { APP_TITLE, IMAGE_URL_TMDB, LOGIN_TITLE, MY_NAME, URL_PLACEHOLDER_BACKDROP, URL_PLACEHOLDER_POSTER } from './constantes/constantes';
+import { IMAGE_URL_TMDB, LOGIN_TITLE, MY_NAME, URL_PLACEHOLDER_BACKDROP, URL_PLACEHOLDER_POSTER } from './constantes/constantes';
 import { GENRE_TEST, MOVIE_TEST } from './constantes/testConstantes';
 import { getBackdropFullURL, getPosterFullURL, locationToMovieType } from './functions/helperFunctions';
 import { store } from './redux/store';
 import { MemoryRouter, Route } from 'react-router-dom';
 
-const RenderWithRouter = ({ children }: { children: JSX.Element }) => (
-  <MemoryRouter initialEntries={['search/test']}>
-    <Route path="search/:searchText">{children}</Route>
-  </MemoryRouter>
-);
+
+jest.mock('./features/auth/authService');  
+jest.mock('./features/movie/movieService');
 
 jest.mock('react-text-truncate', () => {
   return ({ text }: { text: string }) => <div>{text}</div>
 })
 
-// jest.mock('react-router', () => ({
-//   ...jest.requireActual("react-router") as {},
-//   useParams: jest.fn().mockImplementation(() => ({
-//     searchText: 'test',
-//   })),
-//   useLocation: jest.fn().mockImplementation(() => ({
-//     pathname: '/toprated',
-//   }))
-// }));
+
+const RenderWithRouter = ({ children }: { children: JSX.Element }) => (
+  <MemoryRouter initialEntries={['search/test']}>
+    <Route path="search/:searchText">{children}</Route>
+  </MemoryRouter>
+); 
 
 describe('Render App', () => {
 
@@ -47,17 +42,7 @@ describe('Render App', () => {
 });
 
 
-describe('Render Components', () => {
-
-  beforeEach(() => {
-    // window.gapi = GAPI_MOCK_TEST;
-    // window.gapi.auth2 = GAPI_MOCK_TEST.auth2;
-    // window.gapi.load = GAPI_MOCK_TEST.load;
-    // window.gapi.auth2.init = GAPI_MOCK_TEST.auth2.init; 
-  });
-
-  afterEach(() => {
-  });
+describe('Render Components', () => { 
 
   test('Render <MovieCard/>', () => {
     const { getByText } = render(<MovieCard movie={MOVIE_TEST} genre={GENRE_TEST} />);

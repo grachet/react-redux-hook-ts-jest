@@ -1,8 +1,10 @@
 import { CLIENT_ID_GOOGLE } from "../../constantes/config";
 import {   GapiType, AccountType } from "./authTypes";
+
 declare global {
     interface Window { gapi: any; }
 }
+
 class AuthService {
 
     gapi: GapiType
@@ -13,6 +15,11 @@ class AuthService {
 
     async gapiLogin(onlyAlreadySigned: boolean = false): Promise<AccountType | null> {
         try {
+
+            if (!this.gapi?.load) {
+                return null
+            }
+
             await new Promise((resolve, reject) => {
                 this.gapi.load('client:auth2', resolve);
             });

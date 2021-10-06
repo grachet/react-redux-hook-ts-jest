@@ -10,16 +10,16 @@ import { Dispatch } from 'redux';
 import MovieCard from '../../app/components/MovieCard';
 import { locationToMovieType } from '../../functions/helperFunctions';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { getGenre, nowplaying, search, selectMovie, toprated, upcoming } from './movieSlice';
+import { getGenre, getNowPlaying, getSearch, selectMovie, getTopRated, getUpcoming } from './movieSlice';
 import { MovieKeyType, MovieState, MovieType } from "./movieTypes";
 
 const dispatchGetMovie = (dispatch: Dispatch<any>, movieType: string) => {
     if (movieType === "toprated") {
-        dispatch(toprated())
+        dispatch(getTopRated())
     } else if (movieType === "nowplaying") {
-        dispatch(nowplaying())
+        dispatch(getNowPlaying())
     } else if (movieType === "upcoming") {
-        dispatch(upcoming())
+        dispatch(getUpcoming())
     }
 }
 
@@ -40,7 +40,7 @@ function MovieList() {
 
     useEffect(() => {
         if (!!searchText) {
-            dispatch(search(searchText))
+            dispatch(getSearch(searchText))
         }
     }, [dispatch, searchText])
 
